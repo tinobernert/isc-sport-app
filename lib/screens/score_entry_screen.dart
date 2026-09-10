@@ -5,8 +5,6 @@ import 'class_screen.dart';
 import 'station_screen.dart';
 import 'teacher_screen.dart';
 
-enum StudentListDesign { valueInMiddle, valueOnRight }
-
 class ScoreEntryScreen extends StatefulWidget {
   final String teacherName;
   final String stationName;
@@ -25,15 +23,14 @@ class ScoreEntryScreen extends StatefulWidget {
 
 class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
   String searchQuery = '';
-  StudentListDesign selectedDesign = StudentListDesign.valueInMiddle;
 
   final Map<String, TextEditingController> _controllers = {};
 
   List<Student> students = [
     Student(id: '1', firstName: 'Tim', lastName: 'Becker'),
-    Student(id: '2', firstName: 'Max', lastName: 'Schmidt'),
-    Student(id: '3', firstName: 'Anna', lastName: 'Weber'),
-    Student(id: '4', firstName: 'Laura', lastName: 'Fischer'),
+    Student(id: '2', firstName: 'Laura', lastName: 'Fischer'),
+    Student(id: '3', firstName: 'Max', lastName: 'Schmidt'),
+    Student(id: '4', firstName: 'Anna', lastName: 'Weber'),
   ];
 
   @override
@@ -73,17 +70,18 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
     }).toList()..sort((a, b) => a.lastName.compareTo(b.lastName));
 
     return Scaffold(
+      backgroundColor: const Color(0xFFF4F4F6),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              // ZENTRALES OFFLINE-BANNER WIDGET
-              const OfflineBanner(),
-              const SizedBox(height: 12),
+        child: Column(
+          children: [
+            // 1. ZENTRALES OFFLINE-BANNER
+            const OfflineBanner(),
+            const SizedBox(height: 8),
 
-              // HEADER CHIPS
-              Row(
+            // 2. HEADER CHIPS
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
                 children: [
                   Expanded(
                     child: InkWell(
@@ -106,13 +104,19 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                           children: [
                             const Icon(Icons.person, color: Colors.orange, size: 14),
                             const SizedBox(width: 4),
-                            Flexible(child: Text(widget.teacherName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12), overflow: TextOverflow.ellipsis)),
+                            Flexible(
+                              child: Text(
+                                widget.teacherName,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 6),
                   Expanded(
                     child: InkWell(
                       onTap: () {
@@ -133,13 +137,19 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                           children: [
                             const Icon(Icons.fitness_center, color: Colors.orange, size: 14),
                             const SizedBox(width: 4),
-                            Flexible(child: Text(widget.stationName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12), overflow: TextOverflow.ellipsis)),
+                            Flexible(
+                              child: Text(
+                                widget.stationName,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 6),
                   Expanded(
                     child: InkWell(
                       onTap: () {
@@ -165,7 +175,13 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                           children: [
                             const Icon(Icons.groups, color: Colors.orange, size: 14),
                             const SizedBox(width: 4),
-                            Flexible(child: Text(widget.className, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12), overflow: TextOverflow.ellipsis)),
+                            Flexible(
+                              child: Text(
+                                widget.className,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -173,120 +189,88 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+            ),
+            const SizedBox(height: 8),
 
-              // SUCHLEISTE (80%) + DESIGN TOGGLE (20%)
-              Row(
-                children: [
-                  Expanded(
-                    flex: 8, // 80% Breite
-                    child: TextField(
-                      onChanged: (val) => setState(() => searchQuery = val),
-                      decoration: InputDecoration(
-                        hintText: 'Schüler suchen...',
-                        prefixIcon: const Icon(Icons.search, color: Colors.orange),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
+            // 3. SUCHLEISTE (Volle Breite)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: TextField(
+                onChanged: (val) => setState(() => searchQuery = val),
+                decoration: InputDecoration(
+                  hintText: 'Schüler suchen...',
+                  prefixIcon: const Icon(Icons.search, color: Colors.orange),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    flex: 2, // 20% Breite
-                    child: Container(
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            // 4. SCHÜLERLISTE (Name -> Status -> Wert)
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                itemCount: filteredStudents.length,
+                itemBuilder: (context, index) {
+                  final student = filteredStudents[index];
+
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: Colors.grey.shade200),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
                       child: Row(
                         children: [
+                          // SPALTE 1: Name (links)
                           Expanded(
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.view_headline,
-                                color: selectedDesign == StudentListDesign.valueInMiddle ? Colors.orange : Colors.grey,
-                              ),
-                              tooltip: 'Layout 1: Wert in der Mitte',
-                              onPressed: () => setState(() => selectedDesign = StudentListDesign.valueInMiddle),
+                            flex: 4,
+                            child: Text(
+                              '${student.lastName}, ${student.firstName}',
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Container(width: 1, height: 24, color: Colors.grey[300]),
+
+                          // SPALTE 2: Status Buttons (Mitte mit Signalfarben)
                           Expanded(
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.view_column,
-                                color: selectedDesign == StudentListDesign.valueOnRight ? Colors.orange : Colors.grey,
-                              ),
-                              tooltip: 'Layout 2: Wert rechts außen',
-                              onPressed: () => setState(() => selectedDesign = StudentListDesign.valueOnRight),
+                            flex: 5,
+                            child: Center(
+                              child: _buildStatusButtons(student),
+                            ),
+                          ),
+
+                          // SPALTE 3: Wert (rechts außen)
+                          Expanded(
+                            flex: 2,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: _buildValueField(student),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
-              const SizedBox(height: 12),
-
-              // SCHÜLERLISTE (Dynamisch je nach gewähltem Design)
-              Expanded(
-                child: ListView.builder(
-                  itemCount: filteredStudents.length,
-                  itemBuilder: (context, index) {
-                    final student = filteredStudents[index];
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 4),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            // 1. SCHÜLERNAME (Immer links)
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 4.0),
-                                child: Text(
-                                  '${student.lastName}, ${student.firstName}',
-                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                                ),
-                              ),
-                            ),
-
-                            // DYNAMISCHER AUFBAU JE NACH DESIGN-TOGGLE
-                            if (selectedDesign == StudentListDesign.valueInMiddle) ...[
-                              // DESIGN 1: [Name] -> [Wert in der Mitte] -> [Status Buttons rechts]
-                              _buildValueField(student),
-                              const SizedBox(width: 8),
-                              _buildStatusButtons(student),
-                            ] else ...[
-                              // DESIGN 2: [Name] -> [Status Buttons in der Mitte] -> [Wert rechts außen]
-                              _buildStatusButtons(student),
-                              const SizedBox(width: 8),
-                              _buildValueField(student),
-                            ],
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  // WIDGET FÜR STATUS BUTTONS
+  // STATUS BUTTONS MIT SICHTBAREN FARBEN (Grün, Orange, Rot)
   Widget _buildStatusButtons(Student student) {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -315,22 +299,29 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
     );
   }
 
-  // WIDGET FÜR WERT TEXTFIELD
   Widget _buildValueField(Student student) {
     return SizedBox(
-      width: 75,
+      width: 70,
+      height: 40,
       child: TextField(
         controller: _controllers[student.id],
         enabled: student.status == AttendanceStatus.present,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
         decoration: InputDecoration(
           hintText: student.status == AttendanceStatus.present ? 'Wert' : '-',
           filled: true,
-          fillColor: student.status == AttendanceStatus.present ? Colors.white : Colors.grey[200],
-          border: const OutlineInputBorder(),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+          fillColor: student.status == AttendanceStatus.present ? Colors.white : Colors.grey[100],
+          contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(color: Colors.grey.shade400),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(color: Colors.grey.shade400),
+          ),
         ),
         onChanged: (val) {
           student.score = val;
@@ -357,7 +348,7 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
           label,
           style: TextStyle(
             color: isSelected ? Colors.white : Colors.black87,
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: FontWeight.bold,
           ),
         ),
