@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/offline_banner.dart';
 import 'station_screen.dart';
 
 class TeacherScreen extends StatefulWidget {
@@ -30,31 +31,8 @@ class _TeacherScreenState extends State<TeacherScreen> {
           padding: const EdgeInsets.all(10.0), // 10px Sicherheitsabstand außen
           child: Column(
             children: [
-              // OFFLINE BANNER + SYNC BUTTON
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.orange[800],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.wifi_off, color: Colors.white, size: 18),
-                    const SizedBox(width: 8),
-                    const Expanded(
-                      child: Text(
-                        'Offline-Modus – Änderungen lokal gesichert',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                      ),
-                    ),
-                    TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.sync, color: Colors.white, size: 16),
-                      label: const Text('Sync', style: TextStyle(color: Colors.white)),
-                    ),
-                  ],
-                ),
-              ),
+              // OFFLINE BANNER WIDGET INKLUDIERT
+              const OfflineBanner(),
               const SizedBox(height: 12),
 
               // HEADER CHIPS

@@ -72,16 +72,16 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF4F4F6),
       body: SafeArea(
-        child: Column(
-          children: [
-            // 1. ZENTRALES OFFLINE-BANNER
-            const OfflineBanner(),
-            const SizedBox(height: 8),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0), // Gleicher 10px Abstand wie im TeacherScreen
+          child: Column(
+            children: [
+              // 1. ZENTRALES OFFLINE-BANNER WIDGET INKLUDIERT
+              const OfflineBanner(),
+              const SizedBox(height: 12),
 
-            // 2. HEADER CHIPS
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
+              // 2. HEADER CHIPS
+              Row(
                 children: [
                   Expanded(
                     child: InkWell(
@@ -189,13 +189,10 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 8),
+              const SizedBox(height: 12),
 
-            // 3. SUCHLEISTE (Volle Breite)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: TextField(
+              // 3. SUCHLEISTE (Volle Breite)
+              TextField(
                 onChanged: (val) => setState(() => searchQuery = val),
                 decoration: InputDecoration(
                   hintText: 'Schüler suchen...',
@@ -209,68 +206,66 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 8),
+              const SizedBox(height: 12),
 
-            // 4. SCHÜLERLISTE (Name -> Status -> Wert)
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                itemCount: filteredStudents.length,
-                itemBuilder: (context, index) {
-                  final student = filteredStudents[index];
+              // 4. SCHÜLERLISTE (Name -> Status -> Wert)
+              Expanded(
+                child: ListView.builder(
+                  itemCount: filteredStudents.length,
+                  itemBuilder: (context, index) {
+                    final student = filteredStudents[index];
 
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(color: Colors.grey.shade200),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
-                      child: Row(
-                        children: [
-                          // SPALTE 1: Name (links)
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                              '${student.lastName}, ${student.firstName}',
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-
-                          // SPALTE 2: Status Buttons (Mitte mit Signalfarben)
-                          Expanded(
-                            flex: 5,
-                            child: Center(
-                              child: _buildStatusButtons(student),
-                            ),
-                          ),
-
-                          // SPALTE 3: Wert (rechts außen)
-                          Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: _buildValueField(student),
-                            ),
-                          ),
-                        ],
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: Colors.grey.shade200),
                       ),
-                    ),
-                  );
-                },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+                        child: Row(
+                          children: [
+                            // Name (links)
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                '${student.lastName}, ${student.firstName}',
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+
+                            // Status Buttons (Mitte)
+                            Expanded(
+                              flex: 5,
+                              child: Center(
+                                child: _buildStatusButtons(student),
+                              ),
+                            ),
+
+                            // Wert (rechts außen)
+                            Expanded(
+                              flex: 2,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: _buildValueField(student),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // STATUS BUTTONS MIT SICHTBAREN FARBEN (Grün, Orange, Rot)
   Widget _buildStatusButtons(Student student) {
     return Row(
       mainAxisSize: MainAxisSize.min,

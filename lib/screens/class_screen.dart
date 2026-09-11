@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/offline_banner.dart';
 import 'score_entry_screen.dart';
 import 'station_screen.dart';
 import 'teacher_screen.dart';
@@ -19,7 +20,6 @@ class ClassScreen extends StatefulWidget {
 
 class _ClassScreenState extends State<ClassScreen> {
   String selectedBlock = 'A';
-  bool isSyncing = false;
 
   final Map<String, Map<String, List<String>>> classesByBlockAndYear = {
     'A': {
@@ -39,21 +39,6 @@ class _ClassScreenState extends State<ClassScreen> {
     },
   };
 
-  void _triggerSync() async {
-    setState(() => isSyncing = true);
-    await Future.delayed(const Duration(seconds: 2));
-    if (mounted) {
-      setState(() => isSyncing = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Daten erfolgreich mit dem Schulserver synchronisiert!'),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final currentBlockData = classesByBlockAndYear[selectedBlock]!;
@@ -64,37 +49,8 @@ class _ClassScreenState extends State<ClassScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              // OFFLINE BANNER
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.orange[800],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.wifi_off, color: Colors.white, size: 18),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        isSyncing ? 'Synchronisiere mit Server...' : 'Offline-Modus – Änderungen lokal gesichert',
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                      ),
-                    ),
-                    isSyncing
-                        ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                    )
-                        : TextButton.icon(
-                      onPressed: _triggerSync,
-                      icon: const Icon(Icons.sync, color: Colors.white, size: 16),
-                      label: const Text('Sync', style: TextStyle(color: Colors.white)),
-                    ),
-                  ],
-                ),
-              ),
+              // OFFLINE BANNER WIDGET INKLUDIERT
+              const OfflineBanner(),
               const SizedBox(height: 12),
 
               // HEADER CHIPS

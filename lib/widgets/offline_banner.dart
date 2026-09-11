@@ -8,13 +8,16 @@ class OfflineBanner extends StatefulWidget {
 }
 
 class _OfflineBannerState extends State<OfflineBanner> {
-  bool isSyncing = false;
+  bool _isSyncing = false;
 
   void _triggerSync() async {
-    setState(() => isSyncing = true);
+    setState(() => _isSyncing = true);
+
+    // Simulierter Server-Ping & Sync (2 Sekunden)
     await Future.delayed(const Duration(seconds: 2));
+
     if (mounted) {
-      setState(() => isSyncing = false);
+      setState(() => _isSyncing = false);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Daten erfolgreich mit dem Schulserver synchronisiert!'),
@@ -39,20 +42,32 @@ class _OfflineBannerState extends State<OfflineBanner> {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              isSyncing ? 'Synchronisiere mit Server...' : 'Offline-Modus – Änderungen lokal gesichert',
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+              _isSyncing
+                  ? 'Synchronisiere mit Server...'
+                  : 'Offline-Modus – Änderungen lokal gesichert',
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
             ),
           ),
-          isSyncing
+          _isSyncing
               ? const SizedBox(
             width: 20,
             height: 20,
-            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+            child: CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 2,
+            ),
           )
               : TextButton.icon(
             onPressed: _triggerSync,
             icon: const Icon(Icons.sync, color: Colors.white, size: 16),
-            label: const Text('Sync', style: TextStyle(color: Colors.white)),
+            label: const Text(
+              'Sync',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
