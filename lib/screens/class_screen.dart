@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/offline_banner.dart';
+import '../services/api_service.dart';
 import 'score_entry_screen.dart';
 import 'station_screen.dart';
 import 'teacher_screen.dart';
@@ -20,29 +21,16 @@ class ClassScreen extends StatefulWidget {
 
 class _ClassScreenState extends State<ClassScreen> {
   String selectedBlock = 'A';
+  late Future<List<dynamic>> _classesFuture;
 
-  final Map<String, Map<String, List<String>>> classesByBlockAndYear = {
-    'A': {
-      '24er': ['ITF24A1', 'ITF24A2'],
-      '25er': ['ITF25A1', 'ITF25A2'],
-      '26er': ['ITF26A1', 'ITF26A2'],
-    },
-    'B': {
-      '24er': ['ITF24B1', 'ITF24B2'],
-      '25er': ['ITF25B1', 'ITF25B2'],
-      '26er': ['ITF26B1', 'ITF26B2'],
-    },
-    'C': {
-      '24er': ['ITF24C1', 'ITF24C2'],
-      '25er': ['ITF25C1', 'ITF25C2'],
-      '26er': ['ITF26C1', 'ITF26C2'],
-    },
-  };
+  @override
+  void initState() {
+    super.initState();
+    _classesFuture = ApiService.fetchClasses();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final currentBlockData = classesByBlockAndYear[selectedBlock]!;
-
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -78,7 +66,11 @@ class _ClassScreenState extends State<ClassScreen> {
                             const Icon(Icons.person, color: Colors.orange, size: 16),
                             const SizedBox(width: 4),
                             Flexible(
-                              child: Text(widget.teacherName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13), overflow: TextOverflow.ellipsis),
+                              child: Text(
+                                widget.teacherName,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
@@ -107,7 +99,11 @@ class _ClassScreenState extends State<ClassScreen> {
                             const Icon(Icons.fitness_center, color: Colors.orange, size: 16),
                             const SizedBox(width: 4),
                             Flexible(
-                              child: Text(widget.stationName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13), overflow: TextOverflow.ellipsis),
+                              child: Text(
+                                widget.stationName,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
@@ -129,7 +125,11 @@ class _ClassScreenState extends State<ClassScreen> {
                           Icon(Icons.groups, color: Colors.orange, size: 16),
                           SizedBox(width: 4),
                           Flexible(
-                            child: Text('Klasse wählen', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange, fontSize: 13), overflow: TextOverflow.ellipsis),
+                            child: Text(
+                              'Klasse wählen',
+                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange, fontSize: 13),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       ),
@@ -139,7 +139,7 @@ class _ClassScreenState extends State<ClassScreen> {
               ),
               const SizedBox(height: 12),
 
-              // BLOCK TABS
+              // BLOCK TABS (A, B, C)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: ['A', 'B', 'C'].map((block) {
@@ -147,7 +147,13 @@ class _ClassScreenState extends State<ClassScreen> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: ChoiceChip(
-                      label: Text('Block $block', style: TextStyle(color: isSelected ? Colors.white : Colors.black87, fontWeight: FontWeight.bold)),
+                      label: Text(
+                        'Block $block',
+                        style: TextStyle(
+                          color: isSelected ? Colors.white : Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       selected: isSelected,
                       selectedColor: Colors.orange,
                       backgroundColor: Colors.white,
@@ -160,67 +166,111 @@ class _ClassScreenState extends State<ClassScreen> {
               ),
               const SizedBox(height: 16),
 
-              // SPALTEN-LAYOUT NACH JAHRGÄNGEN (24er | 25er | 26er)
+              // DYNAMISCHER INHALT AUS DER API
               Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: ['24er', '25er', '26er'].map((year) {
-                    final classList = currentBlockData[year] ?? [];
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text(
-                                'Jahrgang $year',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.black87),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            ...classList.map((className) => Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: SizedBox(
-                                width: double.infinity,
-                                height: 55,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: Colors.black87,
-                                    elevation: 1,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                child: FutureBuilder<List<dynamic>>(
+                  future: _classesFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator(color: Colors.orange));
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          'Fehler beim Laden der Klassen:\n${snapshot.error}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      );
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(child: Text('Keine Klassen in der Datenbank gefunden.'));
+                    }
+
+                    final allClassList = snapshot.data!;
+
+                    // 1. Filtern nach aktuell gewähltem Block (A, B oder C)
+                    final blockClasses = allClassList.where((c) => c['block'] == selectedBlock).toList();
+
+                    // 2. Zuordnen nach Jahrgängen (24, 25, 26)
+                    final Map<String, List<dynamic>> classesByYear = {
+                      '24er': blockClasses.where((c) => c['year'].toString() == '24').toList(),
+                      '25er': blockClasses.where((c) => c['year'].toString() == '25').toList(),
+                      '26er': blockClasses.where((c) => c['year'].toString() == '26').toList(),
+                    };
+
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: ['24er', '25er', '26er'].map((yearKey) {
+                        final classList = classesByYear[yearKey] ?? [];
+
+                        return Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 6),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(6),
                                   ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ScoreEntryScreen(
-                                          teacherName: widget.teacherName,
-                                          stationName: widget.stationName,
-                                          className: className,
-                                        ),
-                                      ),
-                                    );
-                                  },
                                   child: Text(
-                                    className,
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Größere Schrift!
+                                    'Jahrgang $yearKey',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )),
-                          ],
-                        ),
-                      ),
+                                const SizedBox(height: 8),
+
+                                // Rendere die Klassen-Buttons für diesen Jahrgang
+                                ...classList.map((classData) {
+                                  final String className = classData['name']; // z.B. "ITF24A1"
+
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      height: 55,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          foregroundColor: Colors.black87,
+                                          elevation: 1,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => ScoreEntryScreen(
+                                                teacherName: widget.teacherName,
+                                                stationName: widget.stationName,
+                                                className: className,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          className,
+                                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
                     );
-                  }).toList(),
+                  },
                 ),
               ),
             ],
