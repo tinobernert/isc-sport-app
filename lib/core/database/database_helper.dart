@@ -24,7 +24,6 @@ class DatabaseHelper {
     );
   }
 
-  // Hier definieren wir unsere Tabellen für den Offline-Betrieb
   Future _createDB(Database db, int version) async {
     await db.execute('''
       CREATE TABLE results (
@@ -37,13 +36,11 @@ class DatabaseHelper {
     ''');
   }
 
-  // Beispiel-Methode: Ergebnis speichern
   Future<int> insertResult(Map<String, dynamic> row) async {
     final db = await instance.database;
     return await db.insert('results', row);
   }
 
-  // Beispiel-Methode: Alle Ergebnisse auslesen
   Future<List<Map<String, dynamic>>> fetchResults() async {
     final db = await instance.database;
     return await db.query('results', orderBy: 'id DESC');

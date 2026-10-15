@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/offline_banner.dart';
-import 'score_entry_screen.dart';
-import 'station_screen.dart';
-import 'teacher_screen.dart';
+import '../../../../core/widgets/offline_banner.dart';
+import '../../../score_entry/presentation/screens/score_entry_screen.dart';
+import '../../../station/presentation/screens/station_screen.dart';
+import '../../../teacher/presentation/screens/teacher_screen.dart';
 
 class ClassScreen extends StatefulWidget {
   final String teacherName;
@@ -49,11 +49,8 @@ class _ClassScreenState extends State<ClassScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              // OFFLINE BANNER WIDGET INKLUDIERT
               const OfflineBanner(),
               const SizedBox(height: 12),
-
-              // HEADER CHIPS
               Row(
                 children: [
                   Expanded(
@@ -138,8 +135,6 @@ class _ClassScreenState extends State<ClassScreen> {
                 ],
               ),
               const SizedBox(height: 12),
-
-              // BLOCK TABS
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: ['A', 'B', 'C'].map((block) {
@@ -159,8 +154,6 @@ class _ClassScreenState extends State<ClassScreen> {
                 }).toList(),
               ),
               const SizedBox(height: 16),
-
-              // SPALTEN-LAYOUT NACH JAHRGÄNGEN (24er | 25er | 26er)
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,7 +204,7 @@ class _ClassScreenState extends State<ClassScreen> {
                                   },
                                   child: Text(
                                     className,
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Größere Schrift!
+                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),

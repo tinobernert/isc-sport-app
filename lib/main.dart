@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/teacher_screen.dart';
+import 'features/teacher/presentation/screens/teacher_screen.dart';
 
 void main() {
   runApp(const SportpointApp());

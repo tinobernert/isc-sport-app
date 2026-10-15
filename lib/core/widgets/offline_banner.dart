@@ -12,8 +12,6 @@ class _OfflineBannerState extends State<OfflineBanner> {
 
   void _triggerSync() async {
     setState(() => _isSyncing = true);
-
-    // Simulierter Server-Ping & Sync (2 Sekunden)
     await Future.delayed(const Duration(seconds: 2));
 
     if (mounted) {
@@ -64,10 +62,7 @@ class _OfflineBannerState extends State<OfflineBanner> {
               : TextButton.icon(
             onPressed: _triggerSync,
             icon: const Icon(Icons.sync, color: Colors.white, size: 16),
-            label: const Text(
-              'Sync',
-              style: TextStyle(color: Colors.white),
-            ),
+            label: const Text('Sync', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

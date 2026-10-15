@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/offline_banner.dart';
-import 'class_screen.dart';
-import 'teacher_screen.dart';
+import '../../../../core/widgets/offline_banner.dart';
+import '../../../school_class/presentation/screens/class_screen.dart';
+import '../../../teacher/presentation/screens/teacher_screen.dart';
 
 class StationScreen extends StatefulWidget {
   final String teacherName;
@@ -13,7 +13,7 @@ class StationScreen extends StatefulWidget {
 }
 
 class _StationScreenState extends State<StationScreen> {
-  final String primaryStation = 'Kugelstoßen'; // Primär zugewiesene Übung
+  final String primaryStation = 'Kugelstoßen';
 
   final List<String> allStations = const [
     'Frisbee-Zielwurf',
@@ -70,7 +70,8 @@ class _StationScreenState extends State<StationScreen> {
   Widget build(BuildContext context) {
     final otherStations = allStations
         .where((s) => s != primaryStation && s.toLowerCase().contains(searchQuery.toLowerCase()))
-        .toList()..sort();
+        .toList()
+      ..sort();
 
     final showPrimary = primaryStation.toLowerCase().contains(searchQuery.toLowerCase());
 
@@ -80,11 +81,8 @@ class _StationScreenState extends State<StationScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              // OFFLINE BANNER WIDGET INKLUDIERT
               const OfflineBanner(),
               const SizedBox(height: 12),
-
-              // HEADER CHIPS
               Row(
                 children: [
                   Expanded(
@@ -142,8 +140,6 @@ class _StationScreenState extends State<StationScreen> {
                 ],
               ),
               const SizedBox(height: 12),
-
-              // SUCHLEISTE
               TextField(
                 onChanged: (val) => setState(() => searchQuery = val),
                 decoration: InputDecoration(
@@ -159,8 +155,6 @@ class _StationScreenState extends State<StationScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-
-              // LISTE DER ÜBUNGEN (Zerstückelt in Betreut vs. Andere)
               Expanded(
                 child: ListView(
                   children: [

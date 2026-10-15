@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/student.dart';
-import '../widgets/offline_banner.dart';
-import 'class_screen.dart';
-import 'station_screen.dart';
-import 'teacher_screen.dart';
+import '../../../../core/widgets/offline_banner.dart';
+import '../../../school_class/presentation/screens/class_screen.dart';
+import '../../../station/presentation/screens/station_screen.dart';
+import '../../../teacher/presentation/screens/teacher_screen.dart';
+import '../../domain/models/student.dart';
 
 class ScoreEntryScreen extends StatefulWidget {
   final String teacherName;
@@ -67,20 +67,18 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
     final filteredStudents = students.where((s) {
       final name = '${s.lastName} ${s.firstName}'.toLowerCase();
       return name.contains(searchQuery.toLowerCase());
-    }).toList()..sort((a, b) => a.lastName.compareTo(b.lastName));
+    }).toList()
+      ..sort((a, b) => a.lastName.compareTo(b.lastName));
 
     return Scaffold(
       backgroundColor: const Color(0xFFF4F4F6),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(10.0), // Gleicher 10px Abstand wie im TeacherScreen
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              // 1. ZENTRALES OFFLINE-BANNER WIDGET INKLUDIERT
               const OfflineBanner(),
               const SizedBox(height: 12),
-
-              // 2. HEADER CHIPS
               Row(
                 children: [
                   Expanded(
@@ -190,8 +188,6 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                 ],
               ),
               const SizedBox(height: 12),
-
-              // 3. SUCHLEISTE (Volle Breite)
               TextField(
                 onChanged: (val) => setState(() => searchQuery = val),
                 decoration: InputDecoration(
@@ -207,8 +203,6 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-
-              // 4. SCHÜLERLISTE (Name -> Status -> Wert)
               Expanded(
                 child: ListView.builder(
                   itemCount: filteredStudents.length,
@@ -226,7 +220,6 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
                         child: Row(
                           children: [
-                            // Name (links)
                             Expanded(
                               flex: 4,
                               child: Text(
@@ -235,16 +228,12 @@ class _ScoreEntryScreenState extends State<ScoreEntryScreen> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-
-                            // Status Buttons (Mitte)
                             Expanded(
                               flex: 5,
                               child: Center(
                                 child: _buildStatusButtons(student),
                               ),
                             ),
-
-                            // Wert (rechts außen)
                             Expanded(
                               flex: 2,
                               child: Align(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/offline_banner.dart';
-import 'station_screen.dart';
+import '../../../../core/widgets/offline_banner.dart';
+import '../../../station/presentation/screens/station_screen.dart';
 
 class TeacherScreen extends StatefulWidget {
   const TeacherScreen({super.key});
@@ -23,19 +23,17 @@ class _TeacherScreenState extends State<TeacherScreen> {
   Widget build(BuildContext context) {
     final filteredTeachers = teachers
         .where((t) => t.toLowerCase().contains(searchQuery.toLowerCase()))
-        .toList()..sort();
+        .toList()
+      ..sort();
 
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(10.0), // 10px Sicherheitsabstand außen
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              // OFFLINE BANNER WIDGET INKLUDIERT
               const OfflineBanner(),
               const SizedBox(height: 12),
-
-              // HEADER CHIPS
               Row(
                 children: [
                   Expanded(
@@ -59,8 +57,6 @@ class _TeacherScreenState extends State<TeacherScreen> {
                 ],
               ),
               const SizedBox(height: 12),
-
-              // SUCHLEISTE
               TextField(
                 onChanged: (val) => setState(() => searchQuery = val),
                 decoration: InputDecoration(
@@ -76,8 +72,6 @@ class _TeacherScreenState extends State<TeacherScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-
-              // LEHRER-LISTE (Flaches List-Card Design wie früher)
               Expanded(
                 child: ListView.builder(
                   itemCount: filteredTeachers.length,
