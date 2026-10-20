@@ -6,6 +6,8 @@ class Student {
   final String lastName;
   AttendanceStatus status;
   String score;
+  final bool isLocalOnly;
+  bool isModified;
 
   Student({
     required this.id,
@@ -13,5 +15,7 @@ class Student {
     required this.lastName,
     this.status = AttendanceStatus.present,
     this.score = '',
+    this.isLocalOnly = false,
+    this.isModified = false,
   });
 }
