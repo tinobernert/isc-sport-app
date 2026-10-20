@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/teacher/presentation/screens/teacher_screen.dart';
+import 'features/event/presentation/screens/event_selection_screen.dart';
 
 void main() {
   runApp(const SportpointApp());
@@ -17,7 +17,7 @@ class SportpointApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         scaffoldBackgroundColor: const Color(0xFFF5F5F5),
       ),
-      home: const TeacherScreen(),
+      home: const EventSelectionScreen(),
     );
   }
 }
