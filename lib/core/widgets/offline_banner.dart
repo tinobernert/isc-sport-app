@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'top_banner.dart';
 
 class OfflineBanner extends StatefulWidget {
   const OfflineBanner({super.key});
@@ -16,12 +17,13 @@ class _OfflineBannerState extends State<OfflineBanner> {
 
     if (mounted) {
       setState(() => _isSyncing = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Daten erfolgreich mit dem Schulserver synchronisiert!'),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
-        ),
+
+      // ✅ Oben einblenden statt unten als SnackBar
+      TopBanner.show(
+        context,
+        message: 'Daten erfolgreich mit dem Schulserver synchronisiert!',
+        backgroundColor: Colors.green.shade700,
+        icon: Icons.cloud_done,
       );
     }
   }
