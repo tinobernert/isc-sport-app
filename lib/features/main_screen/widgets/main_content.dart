@@ -15,6 +15,12 @@ class MainContent extends StatelessWidget {
 
   static const List<Widget> widgetOptions = <Widget>[
     Center(
+      child:Text(
+        'Hauptseite',
+        style: optionStyle,
+      ),
+    ),
+    Center(
       child: Text(
         'Punkteauswertung',
         style: optionStyle,
