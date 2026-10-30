@@ -52,6 +52,10 @@ class SideBar extends StatelessWidget {
 
         const NavigationDrawerDestination(
           icon: Icon(Icons.bar_chart_outlined),
+          label: Text('Hauptseite'),
+        ),
+        const NavigationDrawerDestination(
+          icon: Icon(Icons.bar_chart_outlined),
           label: Text('Punkteauswertung'),
         ),
         const NavigationDrawerDestination(
