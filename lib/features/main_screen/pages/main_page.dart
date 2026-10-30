@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/SideBar.dart';
-import '../widgets/AppBar.dart';
-import '../widgets/MainContent.dart';
+import '../../../core/widgets/main_app_bar.dart';
+import '../../../core/widgets/side_bar.dart';
+import '../widgets/main_content.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
