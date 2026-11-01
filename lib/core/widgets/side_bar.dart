@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SideBar extends StatelessWidget {
-  final int selectedIndex;
+  final int? selectedIndex;
   final ValueChanged<int> onDestinationSelected;
 
   const SideBar({
@@ -22,26 +22,18 @@ class SideBar extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 28, 16, 16),
           child: Row(
             children: [
-              const CircleAvatar(
-                radius: 26,
-                child: Text('SP'),
-              ),
+              const CircleAvatar(radius: 26, child: Text('SP')),
               const SizedBox(width: 14),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'SportPoint',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'Sportverwaltung',
-                    style: TextStyle(
-                      color: scheme.onSurfaceVariant,
-                    ),
+                    style: TextStyle(color: scheme.onSurfaceVariant),
                   ),
                 ],
               ),

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MainAppBar({
-    super.key,
-    required this.title,
-  });
+  const MainAppBar({super.key, required this.title});
 
   final String title;
 
