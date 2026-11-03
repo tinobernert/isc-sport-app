@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../features/classes/pages/classes_page.dart';
 import '../../features/create_disziplin/pages/disziplin_page.dart';
+import '../../features/create_event/pages/create_event_page.dart';
 import '../../features/enter_points/pages/enter_points_page.dart';
 import '../../features/main_screen/pages/main_page.dart';
 import '../../features/ranking/pages/ranking_page.dart';
@@ -24,6 +25,11 @@ enum AppRoute {
     title: 'Punkteeingabe',
     icon: Icon(Icons.edit_note),
     selectedIcon: Icon(Icons.edit_note),
+  ),
+  createEvent(
+    title: 'Event erstellen',
+    icon: Icon(Icons.event_outlined),
+    selectedIcon: Icon(Icons.event),
   ),
   disziplinen(
     title: 'Disziplinen',
@@ -63,6 +69,8 @@ enum AppRoute {
         return const RankingPage();
       case AppRoute.enterPoints:
         return const EnterPointsPage();
+      case AppRoute.createEvent:
+        return const CreateEventPage();
       case AppRoute.disziplinen:
         return const DisziplinPage();
       case AppRoute.classes:
