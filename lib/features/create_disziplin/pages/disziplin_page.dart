@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../../core/widgets/page_heading.dart';
 import '../../../core/widgets/app_layout.dart';
 
 class DisziplinPage extends StatelessWidget {
@@ -10,12 +10,23 @@ class DisziplinPage extends StatelessWidget {
     return AppLayout(
       title: 'Disziplinen',
       selectedIndex: 3,
-      child: ListView(
-        padding: const EdgeInsets.all(24),
+      child: Column(
         children: [
-          Text(
-            'Disziplinen',
-            style: Theme.of(context).textTheme.headlineMedium,
+          Container(
+            height: 60,
+            color: Colors.blue,
+            child: PageHeading(title: "Disziplinen")
+          ),
+
+          Expanded(
+            child: Container(
+              color: Colors.red,
+            ),
+          ),
+
+          Container(
+            height: 40,
+            color: Colors.green,
           ),
         ],
       ),
