@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/app_layout.dart';
 
 class EnterPointsPage extends StatelessWidget {
@@ -8,13 +9,12 @@ class EnterPointsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppLayout(
-      title: 'Punkteeingabe',
-      selectedIndex: 2,
+      currentRoute: AppRoute.enterPoints,
       child: ListView(
         padding: const EdgeInsets.all(24),
         children: [
           Text(
-            'Punkteeingabe',
+            AppRoute.enterPoints.title,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         ],

@@ -7,24 +7,26 @@ import 'side_bar.dart';
 class AppLayout extends StatelessWidget {
   const AppLayout({
     super.key,
-    required this.title,
+    this.currentRoute,
+    this.title,
     required this.child,
-    this.selectedIndex,
   });
 
-  final String title;
-  final int? selectedIndex;
+  final AppRoute? currentRoute;
+  final String? title;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final displayTitle = title ?? currentRoute?.title ?? '';
+
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MainAppBar(title: title),
+      appBar: MainAppBar(title: displayTitle),
       drawer: SideBar(
-        selectedIndex: selectedIndex,
-        onDestinationSelected: (index) =>
-            AppRoutes.navigate(context, index, selectedIndex),
+        currentRoute: currentRoute,
+        onRouteSelected: (targetRoute) =>
+            AppRoutes.navigateTo(context, targetRoute, currentRoute),
       ),
       body: child,
     );

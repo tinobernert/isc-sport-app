@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/app_layout.dart';
 
 class RankingPage extends StatelessWidget {
@@ -8,8 +9,7 @@ class RankingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppLayout(
-      title: 'Punkteauswertung',
-      selectedIndex: 1,
+      currentRoute: AppRoute.ranking,
       child: ListView(
         padding: const EdgeInsets.all(24),
         children: [

@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 
+import '../navigation/app_routes.dart';
+
 class SideBar extends StatelessWidget {
-  final int? selectedIndex;
-  final ValueChanged<int> onDestinationSelected;
+  final AppRoute? currentRoute;
+  final ValueChanged<AppRoute> onRouteSelected;
 
   const SideBar({
     super.key,
-    required this.selectedIndex,
-    required this.onDestinationSelected,
+    required this.currentRoute,
+    required this.onRouteSelected,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final mainRoutes = AppRoute.values.where((r) => !r.isFooter).toList();
+    final footerRoutes = AppRoute.values.where((r) => r.isFooter).toList();
 
     return NavigationDrawer(
-      selectedIndex: selectedIndex,
-      onDestinationSelected: onDestinationSelected,
+      selectedIndex: currentRoute?.index,
+      onDestinationSelected: (index) {
+        if (index >= 0 && index < AppRoute.values.length) {
+          onRouteSelected(AppRoute.values[index]);
+        }
+      },
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 28, 16, 16),
@@ -42,25 +50,12 @@ class SideBar extends StatelessWidget {
         ),
         const Divider(),
 
-        const NavigationDrawerDestination(
-          icon: Icon(Icons.bar_chart_outlined),
-          label: Text('Hauptseite'),
-        ),
-        const NavigationDrawerDestination(
-          icon: Icon(Icons.bar_chart_outlined),
-          label: Text('Punkteauswertung'),
-        ),
-        const NavigationDrawerDestination(
-          icon: Icon(Icons.edit_note),
-          label: Text('Punkteeingabe'),
-        ),
-        const NavigationDrawerDestination(
-          icon: Icon(Icons.sports),
-          label: Text('Disziplinen'),
-        ),
-        const NavigationDrawerDestination(
-          icon: Icon(Icons.groups_outlined),
-          label: Text('Klassen'),
+        ...mainRoutes.map(
+          (route) => NavigationDrawerDestination(
+            icon: route.icon,
+            selectedIcon: route.selectedIcon,
+            label: Text(route.title),
+          ),
         ),
 
         const Padding(
@@ -68,9 +63,12 @@ class SideBar extends StatelessWidget {
           child: Divider(),
         ),
 
-        const NavigationDrawerDestination(
-          icon: Icon(Icons.settings_outlined),
-          label: Text('Einstellungen'),
+        ...footerRoutes.map(
+          (route) => NavigationDrawerDestination(
+            icon: route.icon,
+            selectedIcon: route.selectedIcon,
+            label: Text(route.title),
+          ),
         ),
       ],
     );

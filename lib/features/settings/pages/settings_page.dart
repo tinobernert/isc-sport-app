@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/app_layout.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -8,13 +9,12 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppLayout(
-      title: 'Einstellungen',
-      selectedIndex: 5,
+      currentRoute: AppRoute.settings,
       child: ListView(
         padding: const EdgeInsets.all(24),
         children: [
           Text(
-            'Einstellungen',
+            AppRoute.settings.title,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 10),

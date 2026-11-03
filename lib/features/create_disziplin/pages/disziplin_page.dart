@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/app_layout.dart';
 
 class DisziplinPage extends StatelessWidget {
@@ -8,13 +9,12 @@ class DisziplinPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppLayout(
-      title: 'Disziplinen',
-      selectedIndex: 3,
+      currentRoute: AppRoute.disziplinen,
       child: ListView(
         padding: const EdgeInsets.all(24),
         children: [
           Text(
-            'Disziplinen',
+            AppRoute.disziplinen.title,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         ],
