@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'core/theme/app_theme.dart';
-import 'features/main_screen/pages/main_page.dart';
+import 'core/widgets/app_shell.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: appTitle,
       theme: AppTheme.lightTheme,
-      home: const MainPage(),
+      home: const AppShell(),
     );
   }
 }

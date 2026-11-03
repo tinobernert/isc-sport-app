@@ -72,35 +72,3 @@ enum AppRoute {
     }
   }
 }
-
-class AppRoutes {
-  /// Navigiert zum Ziel-Route Enum.
-  static void navigateTo(
-    BuildContext context,
-    AppRoute targetRoute,
-    AppRoute? currentRoute,
-  ) {
-    Navigator.pop(context); // Sidebar schliessen.
-    if (targetRoute == currentRoute) return;
-
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            targetRoute.buildPage(),
-        transitionDuration: Duration.zero,
-        reverseTransitionDuration: Duration.zero,
-      ),
-    );
-  }
-
-  /// Navigiert basierend auf dem Index (z. B. vom SideBar Drawer).
-  static void navigateByIndex(
-    BuildContext context,
-    int index,
-    AppRoute? currentRoute,
-  ) {
-    if (index < 0 || index >= AppRoute.values.length) return;
-    navigateTo(context, AppRoute.values[index], currentRoute);
-  }
-}
