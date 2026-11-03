@@ -16,7 +16,7 @@ enum AppRoute {
     selectedIcon: Icon(Icons.home),
   ),
   ranking(
-    title: 'Punkteauswertung111',
+    title: 'Punkteauswertung',
     icon: Icon(Icons.bar_chart_outlined),
     selectedIcon: Icon(Icons.bar_chart),
   ),
