@@ -21,7 +21,6 @@ class AppLayout extends StatelessWidget {
     final displayTitle = title ?? currentRoute?.title ?? '';
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: MainAppBar(title: displayTitle),
       drawer: SideBar(
         currentRoute: currentRoute,
