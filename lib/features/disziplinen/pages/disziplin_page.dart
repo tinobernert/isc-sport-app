@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/add_button.dart';
 import '../../../core/widgets/page_heading.dart';
 import '../data/test_disziplinen.dart';
@@ -11,7 +12,6 @@ import '../widgets/disziplin_dialog.dart';
 class DisziplinPage extends StatefulWidget {
   /// Optionale initiale Liste von Disziplinen (standardmäßig [testDisziplinen]).
   final List<Disziplin> disziplinen;
-
   /// Erstellt eine neue [DisziplinPage].
   const DisziplinPage({super.key, this.disziplinen = testDisziplinen});
 
