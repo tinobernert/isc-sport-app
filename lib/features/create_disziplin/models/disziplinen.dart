@@ -1,5 +1,4 @@
-// Ein Enum verhindert ungültige Werte für die Richtung.
-enum Richtung { hochGut, niedrigGut }
+enum Richtung { hoch, niedrig }
 
 class Disziplinen {
   final String name;

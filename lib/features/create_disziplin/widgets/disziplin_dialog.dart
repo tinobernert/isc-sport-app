@@ -33,7 +33,6 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
   void _speichern() {
     final disziplin = _formular.erstelleDisziplin();
     if (disziplin != null) {
-      // Dialog schließen und das fertige Objekt an die Seite zurückgeben.
       Navigator.pop(context, disziplin);
     }
   }
@@ -81,11 +80,11 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                   validator: _formular.pruefeRichtung,
                   items: const [
                     DropdownMenuItem(
-                      value: Richtung.hochGut,
+                      value: Richtung.hoch,
                       child: Text('Hoch gut'),
                     ),
                     DropdownMenuItem(
-                      value: Richtung.niedrigGut,
+                      value: Richtung.niedrig,
                       child: Text('Niedrig gut'),
                     ),
                   ],
@@ -112,7 +111,13 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
           onPressed: () => Navigator.pop(context),
           child: const Text('Abbrechen'),
         ),
-        FilledButton(onPressed: _speichern, child: const Text('Speichern')),
+        FilledButton(
+          style: FilledButton.styleFrom(
+            backgroundColor: const Color(0xFFFF8134),
+          ),
+          onPressed: _speichern,
+          child: const Text('Speichern'),
+        ),
       ],
     );
   }

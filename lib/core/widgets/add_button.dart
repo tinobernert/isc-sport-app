@@ -12,6 +12,7 @@ class AddButton extends StatelessWidget {
       child: FilledButton(
         onPressed: onPressed,
         style: FilledButton.styleFrom(
+          backgroundColor:const Color(0xFFFF8134) ,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
