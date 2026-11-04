@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/classes/pages/classes_page.dart';
+import '../../features/create_disziplin/pages/disziplin_page.dart';
 import '../../features/create_event/pages/create_event_page.dart';
 import '../../features/disziplinen/pages/disziplin_page.dart';
 import '../../features/enter_points/pages/enter_points_page.dart';
@@ -49,16 +50,9 @@ enum AppRoute {
     isFooter: true,
   );
 
-  /// Der in der Navigation/AppBar angezeigte Titel.
   final String title;
-
-  /// Das Icon im inaktiven Zustand.
   final Widget icon;
-
-  /// Das Icon im ausgewählten Zustand.
   final Widget? selectedIcon;
-
-  /// Gibt an, ob das Element unten im Footer des Drawers gerendert wird.
   final bool isFooter;
 
   const AppRoute({
@@ -86,41 +80,5 @@ enum AppRoute {
       case AppRoute.settings:
         return const SettingsPage();
     }
-  }
-}
-
-/// Hilfsklasse zur Steuerung der Bildschirmnavigation.
-class AppRoutes {
-  /// Navigiert zum Ziel-Route Enum.
-  static void navigateTo(
-    BuildContext context,
-    AppRoute targetRoute,
-    AppRoute? currentRoute,
-  ) {
-    // Drawer nur schließen, falls dieser aktuell geöffnet ist.
-    if (Scaffold.maybeOf(context)?.isDrawerOpen ?? false) {
-      Navigator.pop(context);
-    }
-    if (targetRoute == currentRoute) return;
-
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            targetRoute.buildPage(),
-        transitionDuration: Duration.zero,
-        reverseTransitionDuration: Duration.zero,
-      ),
-    );
-  }
-
-  /// Navigiert basierend auf dem Index (z. B. vom SideBar Drawer).
-  static void navigateByIndex(
-    BuildContext context,
-    int index,
-    AppRoute? currentRoute,
-  ) {
-    if (index < 0 || index >= AppRoute.values.length) return;
-    navigateTo(context, AppRoute.values[index], currentRoute);
   }
 }

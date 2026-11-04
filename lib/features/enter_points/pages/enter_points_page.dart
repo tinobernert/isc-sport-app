@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_strings.dart';
 
+import '../../../core/constants/app_strings.dart';
+
 /// Seite zur Eingabe von erzielten Punkten und Leistungen.
 class EnterPointsPage extends StatelessWidget {
   /// Erstellt eine neue [EnterPointsPage].
@@ -9,6 +11,14 @@ class EnterPointsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(24),
+      children: [
+        Text(
+          AppStrings.enterPointsTitle,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+      ],
     return ListView(
       padding: const EdgeInsets.all(24),
       children: [

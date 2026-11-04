@@ -5,6 +5,11 @@ import '../../../core/services/sport_event_store.dart';
 import 'show_event_page.dart';
 import 'event_history_page.dart';
 
+import '../../../core/constants/app_strings.dart';
+
+import '../../../core/navigation/app_routes.dart';
+import '../../../core/widgets/app_layout.dart';
+
 /// Seite zum Erstellen und Verwalten von Sportveranstaltungen.
 class CreateEventPage extends StatefulWidget {
   /// Erstellt eine neue [CreateEventPage].
@@ -174,6 +179,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
         foregroundColor: colorScheme.onPrimary,
       ),
       body: ListView(
+    return ListView(
+      padding: const EdgeInsets.all(24),
+      children: [
+        Text(
+          AppStrings.createEventHeading,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+      ],
+    return AppLayout(
+      currentRoute: AppRoute.createEvent,
+      child: ListView(
         padding: const EdgeInsets.all(24),
         children: [
           Row(
