@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_strings.dart';
+
 class DisziplinPage extends StatelessWidget {
   const DisziplinPage({super.key});
 
@@ -9,7 +11,7 @@ class DisziplinPage extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       children: [
         Text(
-          'Disziplinen',
+          AppStrings.disziplinenTitle,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ],

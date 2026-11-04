@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_strings.dart';
+
 class CreateEventPage extends StatelessWidget {
   const CreateEventPage({super.key});
 
@@ -9,7 +11,7 @@ class CreateEventPage extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       children: [
         Text(
-          'Veranstaltung erstellen',
+          AppStrings.createEventHeading,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_strings.dart';
+
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
@@ -8,7 +10,10 @@ class MainPage extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(24),
       children: [
-        Text('Hauptseite', style: Theme.of(context).textTheme.headlineMedium),
+        Text(
+          AppStrings.mainPageTitle,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ],
     );
   }

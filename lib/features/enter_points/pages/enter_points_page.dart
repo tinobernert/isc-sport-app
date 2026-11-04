@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_strings.dart';
+
 class EnterPointsPage extends StatelessWidget {
   const EnterPointsPage({super.key});
 
@@ -9,7 +11,7 @@ class EnterPointsPage extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       children: [
         Text(
-          'Punkteeingabe',
+          AppStrings.enterPointsTitle,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ],

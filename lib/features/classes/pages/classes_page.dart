@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_strings.dart';
+
 class ClassesPage extends StatelessWidget {
   const ClassesPage({super.key});
 
@@ -8,7 +10,10 @@ class ClassesPage extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(24),
       children: [
-        Text('Klassen', style: Theme.of(context).textTheme.headlineMedium),
+        Text(
+          AppStrings.classesTitle,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ],
     );
   }

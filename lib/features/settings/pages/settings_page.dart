@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_strings.dart';
+
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -9,7 +11,7 @@ class SettingsPage extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       children: [
         Text(
-          'Einstellungen',
+          AppStrings.settingsTitle,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         const SizedBox(height: 10),

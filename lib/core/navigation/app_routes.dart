@@ -7,42 +7,43 @@ import '../../features/enter_points/pages/enter_points_page.dart';
 import '../../features/main_screen/pages/main_page.dart';
 import '../../features/ranking/pages/ranking_page.dart';
 import '../../features/settings/pages/settings_page.dart';
+import '../constants/app_strings.dart';
 
 /// AppRoute repräsentiert alle Haupt-Navigationsziele in der App
 /// inkl. Titel, Icons und der Verknüpfung zur entsprechenden Seite.
 enum AppRoute {
   mainPage(
-    title: 'Hauptseite',
+    title: AppStrings.mainPageTitle,
     icon: Icon(Icons.home_outlined),
     selectedIcon: Icon(Icons.home),
   ),
   ranking(
-    title: 'Punkteauswertung',
+    title: AppStrings.rankingTitle,
     icon: Icon(Icons.bar_chart_outlined),
     selectedIcon: Icon(Icons.bar_chart),
   ),
   enterPoints(
-    title: 'Punkteeingabe',
+    title: AppStrings.enterPointsTitle,
     icon: Icon(Icons.edit_note),
     selectedIcon: Icon(Icons.edit_note),
   ),
   createEvent(
-    title: 'Event erstellen',
+    title: AppStrings.createEventTitle,
     icon: Icon(Icons.event_outlined),
     selectedIcon: Icon(Icons.event),
   ),
   disziplinen(
-    title: 'Disziplinen',
+    title: AppStrings.disziplinenTitle,
     icon: Icon(Icons.sports),
     selectedIcon: Icon(Icons.sports),
   ),
   classes(
-    title: 'Klassen',
+    title: AppStrings.classesTitle,
     icon: Icon(Icons.groups_outlined),
     selectedIcon: Icon(Icons.groups),
   ),
   settings(
-    title: 'Einstellungen',
+    title: AppStrings.settingsTitle,
     icon: Icon(Icons.settings_outlined),
     selectedIcon: Icon(Icons.settings),
     isFooter: true,
