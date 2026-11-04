@@ -22,7 +22,13 @@ class SideBar extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 28, 16, 16),
           child: Row(
             children: [
-              const CircleAvatar(radius: 26, child: Text('SP')),
+               ClipOval(
+                child: Image.asset(
+                  'assets/img/logo_Sport-Point.png',
+                  width: 52,
+                  height: 52,
+                ),
+              ),
               const SizedBox(width: 14),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

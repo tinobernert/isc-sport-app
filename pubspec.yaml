@@ -1,4 +1,4 @@
-name: SportPoint
+name: sportpoint
 description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0+1
@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   postgres: ^3.5.20
   sqflite: ^2.4.5
+  sqflite_common_ffi: ^2.4.5
+  uuid: ^4.6.0
 
 dev_dependencies:
   flutter_test:
@@ -20,6 +22,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/img/logo_Sport-Point.png
 
 flutter_launcher_icons:
   android: true
