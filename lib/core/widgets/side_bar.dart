@@ -15,6 +15,8 @@ class SideBar extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return NavigationDrawer(
+      backgroundColor: const Color.fromARGB(255, 255, 234, 221),
+      indicatorColor: const Color.fromARGB(255, 255, 142, 72),
       selectedIndex: selectedIndex,
       onDestinationSelected: onDestinationSelected,
       children: [

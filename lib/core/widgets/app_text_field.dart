@@ -22,7 +22,7 @@ class AppTextField extends StatelessWidget {
       validator: validator,
       decoration: InputDecoration(
         labelText: label,
-        border: const OutlineInputBorder(),
+        border: const OutlineInputBorder(), 
       ),
     );
   }

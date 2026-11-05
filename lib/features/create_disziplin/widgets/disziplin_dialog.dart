@@ -40,6 +40,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.white,
       title: Text(
         widget.disziplin == null
             ? 'Disziplin hinzufügen'
@@ -108,6 +109,9 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
       ),
       actions: [
         TextButton(
+          style: TextButton.styleFrom(
+            foregroundColor: const Color(0xFFFF8134),
+          ),
           onPressed: () => Navigator.pop(context),
           child: const Text('Abbrechen'),
         ),
