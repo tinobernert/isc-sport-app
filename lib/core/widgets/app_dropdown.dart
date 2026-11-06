@@ -20,6 +20,7 @@ class AppDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
+      dropdownColor: Colors.white,
       initialValue: value,
       isExpanded: true,
       items: items,
@@ -32,7 +33,6 @@ class AppDropdown<T> extends StatelessWidget {
           color: Color(0xFF475569), // Normal
         ),
 
-        // Normaler Rahmen
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Color(0xFF475569),
@@ -40,7 +40,6 @@ class AppDropdown<T> extends StatelessWidget {
           ),
         ),
 
-        // Rahmen bei Auswahl
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Color(0xFFFF8134),
