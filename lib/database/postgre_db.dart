@@ -6,14 +6,18 @@ Future<void> connectToPostgreSQL() async {
       Endpoint(
         host: '10.25.1.16',
         port: 5432,
-        database: 'postgres',
-        username: 'postgres',
-        password: '',
+        database: 'sport-app-db',
+        username: 'sportadmin',
+        password: 'Thema3',
       ),
     );
 
     final result = await postgreConn.execute(
-      Sql.named('SELECT count(*) FROM "Disziplin"'),
+      Sql.named('''SELECT table_schema, table_name
+             FROM information_schema.tables
+             WHERE table_type = 'BASE TABLE'
+             AND table_schema NOT IN ('pg_catalog', 'information_schema')
+             ORDER BY table_schema, table_name;'''),
     );
 
     print(result);
