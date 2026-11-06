@@ -1,12 +1,11 @@
-
 class Schueler {
-  final String sid;
+  final int? sid;
   final String kid;
   final String vorname;
   final String nachname;
 
   Schueler({
-    required this.sid,
+    this.sid,
     required this.kid,
     required this.vorname,
     required this.nachname,
@@ -14,7 +13,7 @@ class Schueler {
 
   Map<String, dynamic> toMap() {
     return {
-      'SID': sid,
+      if (sid != null) 'SID': sid,
       'KID': kid,
       'Vorname': vorname,
       'Nachname': nachname,
@@ -23,7 +22,9 @@ class Schueler {
 
   factory Schueler.fromMap(Map<String, dynamic> map) {
     return Schueler(
-      sid: map['SID'],
+      sid: map['SID'] == null
+          ? null
+          : (map['SID'] as num).toInt(),
       kid: map['KID'],
       vorname: map['Vorname'],
       nachname: map['Nachname'],
