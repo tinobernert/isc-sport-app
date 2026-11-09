@@ -37,7 +37,7 @@ class EventHistoryPage extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: colorScheme.primary.withOpacity(0.1),
+                          color: colorScheme.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -103,7 +103,7 @@ class EventHistoryPage extends StatelessWidget {
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 leading: CircleAvatar(
-                  backgroundColor: rankColor ?? colorScheme.primary.withOpacity(0.1),
+                  backgroundColor: rankColor ?? colorScheme.primary.withValues(alpha: 0.1),
                   child: rankIcon != null
                       ? Icon(rankIcon, color: Colors.white)
                       : Text(
@@ -144,7 +144,7 @@ class EventHistoryPage extends StatelessWidget {
                 trailing: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: colorScheme.primary.withOpacity(0.1),
+                    color: colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(

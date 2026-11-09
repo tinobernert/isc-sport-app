@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/navigation/app_routes.dart';
-import '../../../core/widgets/add_button.dart';
-import '../../../core/widgets/page_heading.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/models/discipline_model.dart';
 import '../widgets/disziplin_card.dart';
 import '../widgets/disziplin_dialog.dart';
@@ -21,6 +20,7 @@ class DisziplinPage extends StatefulWidget {
 
 class _DisziplinPageState extends State<DisziplinPage> {
   late final List<DisciplineModel> _disziplinen;
+  String _searchQuery = '';
 
   @override
   void initState() {
@@ -31,16 +31,19 @@ class _DisziplinPageState extends State<DisziplinPage> {
   }
 
   Future<void> _bearbeiten(int index) async {
+    final originalDiscipline = filteredDisciplines[index];
+    final originalIndex = _disziplinen.indexOf(originalDiscipline);
+
     final ergebnis = await showDialog<DisciplineModel>(
       context: context,
       barrierColor: Colors.black38,
-      builder: (context) => DisziplinDialog(discipline: _disziplinen[index]),
+      builder: (context) => DisziplinDialog(discipline: originalDiscipline),
     );
 
     if (ergebnis == null || !mounted) return;
 
     setState(() {
-      _disziplinen[index] = ergebnis;
+      _disziplinen[originalIndex] = ergebnis;
     });
   }
 
@@ -58,40 +61,117 @@ class _DisziplinPageState extends State<DisziplinPage> {
     });
   }
 
+  List<DisciplineModel> get filteredDisciplines {
+    if (_searchQuery.trim().isEmpty) return _disziplinen;
+    return _disziplinen
+        .where((d) => d.name.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 30),
+        const SizedBox(height: 24),
+        // Header Row: Title, Badge, Hinzufügen Button
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 24),
+        //   child: Row(
+        //     children: [
+        //       Container(
+        //         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        //         decoration: BoxDecoration(
+        //           color: AppColors.primaryLight,
+        //           borderRadius: BorderRadius.circular(12),
+        //         ),
+        //         child: Text(
+        //           '${_disziplinen.length} Disziplinen',
+        //           style: const TextStyle(
+        //             color: AppColors.primary,
+        //             fontWeight: FontWeight.bold,
+        //             fontSize: 12,
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(height: 20),
+        // Search & Add Bar Row
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
             children: [
-              const Expanded(
-                child: PageHeading(title: AppStrings.disziplinenTitle),
+              Expanded(
+                child: TextField(
+                  onChanged: (val) {
+                    setState(() {
+                      _searchQuery = val;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Disziplin suchen...',
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: AppColors.primary),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                ),
               ),
               const SizedBox(width: 16),
-              AddButton(onPressed: _hinzufuegen),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                ),
+                onPressed: _hinzufuegen,
+                icon: const Icon(Icons.add, size: 18),
+                label: const Text('Hinzufügen', style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
             ],
           ),
         ),
+        const SizedBox(height: 20),
+        // Grid of Discipline Cards
         Expanded(
-          child: GridView.builder(
-            padding: const EdgeInsets.all(24),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 240,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              mainAxisExtent: 100,
-            ),
-            itemCount: _disziplinen.length,
-            itemBuilder: (context, index) {
-              return DisziplinCard(
-                discipline: _disziplinen[index],
-                onTap: () => _bearbeiten(index),
-              );
-            },
-          ),
+          child: filteredDisciplines.isEmpty
+              ? const Center(
+                  child: Text('Keine Disziplinen gefunden.'),
+                )
+              : GridView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 330,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    mainAxisExtent: 200,
+                  ),
+                  itemCount: filteredDisciplines.length,
+                  itemBuilder: (context, index) {
+                    return DisziplinCard(
+                      discipline: filteredDisciplines[index],
+                      onTap: () => _bearbeiten(index),
+                    );
+                  },
+                ),
         ),
         const SizedBox(height: 40),
       ],

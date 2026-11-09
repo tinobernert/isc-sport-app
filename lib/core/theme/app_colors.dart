@@ -33,10 +33,4 @@ abstract class AppColors {
   static const Color laufCategory = Colors.blue;
   static const Color sprungCategory = Colors.green;
   static const Color wurfCategory = Colors.deepOrange;
-
-  /// Rahmenfarbe für Eingabefelder und Dropdowns.
-  static const Color inputBorder = Color(0xFF475569);
-
-  /// Dezentere Textfarbe für Untertitel und Nebeninformationen.
-  static const Color textMuted = Color(0xFF939494);
 }

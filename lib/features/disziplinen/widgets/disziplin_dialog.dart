@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../../../core/widgets/app_dropdown.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/models/discipline_model.dart';
 import '../controllers/disziplin_form_controller.dart';
+import 'icon_picker_dialog.dart';
 
 /// Dialog-Widget zum Anlegen oder Bearbeiten einer Disziplin.
 class DisziplinDialog extends StatefulWidget {
@@ -37,7 +37,6 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
     final discipline = _formular.erstelleDisziplin(
       id: widget.discipline?.id ?? 'd_${DateTime.now().millisecondsSinceEpoch}',
       category: widget.discipline?.category ?? 'LAUF',
-      icon: widget.discipline?.icon ?? Icons.sports,
     );
     if (discipline != null) {
       Navigator.pop(context, discipline);
@@ -60,44 +59,12 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
             key: _formular.formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppTextField(
                   label: 'Name',
                   controller: _formular.nameController,
                   validator: _formular.pruefeName,
-                ),
-                const SizedBox(height: 20),
-                AppDropdown<String>(
-                  label: 'Einheit',
-                  value: _formular.einheit,
-                  validator: _formular.pruefeEinheit,
-                  items: _formular.verfuegbareEinheiten.map((einheit) {
-                    return DropdownMenuItem(
-                      value: einheit,
-                      child: Text(einheit),
-                    );
-                  }).toList(),
-                  onChanged: (wert) {
-                    setState(() {
-                      _formular.einheit = wert;
-                    });
-                  },
-                ),
-                const SizedBox(height: 20),
-                SwitchListTile(
-                  title: const Text('Höher ist besser'),
-                  subtitle: Text(
-                    _formular.higherIsBetter
-                        ? 'Mehr Leistung = mehr Punkte (z. B. Weitsprung)'
-                        : 'Weniger Zeit/Wert = mehr Punkte (z. B. Sprint)',
-                  ),
-                  value: _formular.higherIsBetter,
-                  activeThumbColor: AppColors.primary,
-                  onChanged: (val) {
-                    setState(() {
-                      _formular.higherIsBetter = val;
-                    });
-                  },
                 ),
                 const SizedBox(height: 20),
                 AppTextField(
@@ -107,6 +74,107 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                     decimal: true,
                   ),
                   validator: _formular.pruefeGewichtung,
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Icon',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black87),
+                ),
+                const SizedBox(height: 8),
+                InkWell(
+                  onTap: () async {
+                    final chosenIcon = await showDialog<IconData>(
+                      context: context,
+                      builder: (context) => IconPickerDialog(selectedIcon: _formular.icon),
+                    );
+                    if (chosenIcon != null) {
+                      setState(() {
+                        _formular.icon = chosenIcon;
+                      });
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryLight,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(_formular.icon, color: AppColors.primary, size: 24),
+                        ),
+                        const SizedBox(width: 16),
+                        const Text(
+                          'Icon ändern',
+                          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black87),
+                        ),
+                        const Spacer(),
+                        const Icon(Icons.chevron_right, color: Colors.grey),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Einheit',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black87),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _formular.verfuegbareEinheiten.map((einheit) {
+                    final isSelected = _formular.einheit == einheit;
+                    return ChoiceChip(
+                      showCheckmark: false,
+                      label: Text(einheit),
+                      selected: isSelected,
+                      selectedColor: AppColors.primaryLight,
+                      backgroundColor: Colors.grey.shade100,
+                      labelStyle: TextStyle(
+                        color: isSelected ? AppColors.primary : Colors.black87,
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      ),
+                      onSelected: (selected) {
+                        if (selected) {
+                          setState(() {
+                            _formular.einheit = einheit;
+                          });
+                        }
+                      },
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+                SwitchListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    _formular.higherIsBetter ? 'Mehr ist besser' : 'Weniger ist besser',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    _formular.higherIsBetter
+                        ? 'Z. B. Weitsprung, Kugelstoßen (höherer Wert = mehr Punkte)'
+                        : 'Z. B. 100m Sprint (niedrigere Zeit = mehr Punkte)',
+                  ),
+                  value: _formular.higherIsBetter,
+                  activeThumbColor: AppColors.primary,
+                  inactiveThumbColor: Colors.grey.shade400,
+                  inactiveTrackColor: Colors.grey.shade200,
+                  onChanged: (val) {
+                    setState(() {
+                      _formular.higherIsBetter = val;
+                    });
+                  },
                 ),
               ],
             ),
