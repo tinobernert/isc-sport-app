@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/navigation/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/models/discipline_model.dart';
 import '../widgets/disziplin_card.dart';
@@ -74,30 +73,6 @@ class _DisziplinPageState extends State<DisziplinPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 24),
-        // Header Row: Title, Badge, Hinzufügen Button
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 24),
-        //   child: Row(
-        //     children: [
-        //       Container(
-        //         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        //         decoration: BoxDecoration(
-        //           color: AppColors.primaryLight,
-        //           borderRadius: BorderRadius.circular(12),
-        //         ),
-        //         child: Text(
-        //           '${_disziplinen.length} Disziplinen',
-        //           style: const TextStyle(
-        //             color: AppColors.primary,
-        //             fontWeight: FontWeight.bold,
-        //             fontSize: 12,
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        // const SizedBox(height: 20),
         // Search & Add Bar Row
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -154,24 +129,24 @@ class _DisziplinPageState extends State<DisziplinPage> {
         Expanded(
           child: filteredDisciplines.isEmpty
               ? const Center(
-                  child: Text('Keine Disziplinen gefunden.'),
-                )
+            child: Text('Keine Disziplinen gefunden.'),
+          )
               : GridView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 330,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    mainAxisExtent: 200,
-                  ),
-                  itemCount: filteredDisciplines.length,
-                  itemBuilder: (context, index) {
-                    return DisziplinCard(
-                      discipline: filteredDisciplines[index],
-                      onTap: () => _bearbeiten(index),
-                    );
-                  },
-                ),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 330,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              mainAxisExtent: 175,
+            ),
+            itemCount: filteredDisciplines.length,
+            itemBuilder: (context, index) {
+              return DisziplinCard(
+                discipline: filteredDisciplines[index],
+                onTap: () => _bearbeiten(index),
+              );
+            },
+          ),
         ),
         const SizedBox(height: 40),
       ],

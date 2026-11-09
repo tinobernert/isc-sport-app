@@ -38,17 +38,16 @@ class DisziplinCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top Row: Icon & Title
+              // Header: Icon + Name
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: AppColors.primaryLight,
                       borderRadius: BorderRadius.circular(8),
@@ -56,11 +55,10 @@ class DisziplinCard extends StatelessWidget {
                     child: Icon(
                       discipline.icon,
                       color: AppColors.primary,
-                      size: 20,
+                      size: 18,
                     ),
                   ),
-                  const SizedBox(width: 8), // Kleiner Abstand von 8 Pixeln
-                  // Title
+                  const SizedBox(width: 8),
                   Flexible(
                     child: Text(
                       discipline.name,
@@ -68,7 +66,7 @@ class DisziplinCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.black87,
                       ),
                     ),
@@ -76,57 +74,63 @@ class DisziplinCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 12),
-
               const SizedBox(height: 8),
-              // Tags Row (Einheit & Richtung)
-              Wrap(
-                spacing: 6,
-                runSpacing: 4,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      'Einheit: ${discipline.einheit}',
+
+              // Badge: Richtung
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: richtungBg,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(richtungIcon, size: 11, color: richtungColor),
+                    const SizedBox(width: 4),
+                    Text(
+                      richtungText,
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize: 10,
                         fontWeight: FontWeight.w500,
-                        color: Colors.grey.shade700,
+                        color: richtungColor,
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: richtungBg,
-                      borderRadius: BorderRadius.circular(6),
+                  ],
+                ),
+              ),
+
+              const Spacer(),
+
+              // Trennlinie oben im unteren Bereich
+              const Divider(height: 1, color: Color(0xFFEEEEEE)),
+              const SizedBox(height: 6),
+
+              // Zeile 1: Einheit (Label links, Wert rechts)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Einheit',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade500,
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(richtungIcon, size: 12, color: richtungColor),
-                        const SizedBox(width: 4),
-                        Text(
-                          richtungText,
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                            color: richtungColor,
-                          ),
-                        ),
-                      ],
+                  ),
+                  Text(
+                    discipline.einheit,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade800,
                     ),
                   ),
                 ],
               ),
-              const Spacer(),
-              const Divider(height: 1, color: Color(0xFFEEEEEE)),
-              const SizedBox(height: 8),
-              // Bottom Row (Gewichtung)
+
+              const SizedBox(height: 4),
+
+              // Zeile 2: Gewichtung (Label links, Wert rechts)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -140,7 +144,7 @@ class DisziplinCard extends StatelessWidget {
                   Text(
                     '${discipline.gewichtung} x',
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
