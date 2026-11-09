@@ -1,31 +1,32 @@
-import '../models/disziplinen.dart';
+import '../models/disziplin.dart';
 
+/// Eine Testliste mit vordefinierten Disziplinen für Entwicklungs- und Testzwecke.
 const testDisziplinen = [
-  Disziplinen(
+  Disziplin(
     name: 'Weitsprung',
     einheit: 'm',
     richtung: Richtung.hoch,
     gewichtung: 1.0,
   ),
-  Disziplinen(
+  Disziplin(
     name: 'Sprint',
     einheit: 's',
     richtung: Richtung.niedrig,
     gewichtung: 1.0,
   ),
-  Disziplinen(
+  Disziplin(
     name: 'Kugelstoßen',
     einheit: 'm',
     richtung: Richtung.hoch,
     gewichtung: 1.5,
   ),
-  Disziplinen(
+  Disziplin(
     name: 'Hochsprung',
     einheit: 'cm',
     richtung: Richtung.hoch,
     gewichtung: 1.0,
   ),
-  Disziplinen(
+  Disziplin(
     name: 'Staffellauf',
     einheit: 's',
     richtung: Richtung.niedrig,

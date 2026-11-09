@@ -5,7 +5,9 @@ import '../../../core/services/sport_event_store.dart';
 import 'show_event_page.dart';
 import 'event_history_page.dart';
 
+/// Seite zum Erstellen und Verwalten von Sportveranstaltungen.
 class CreateEventPage extends StatefulWidget {
+  /// Erstellt eine neue [CreateEventPage].
   const CreateEventPage({super.key});
 
   @override

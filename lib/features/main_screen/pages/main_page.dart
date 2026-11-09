@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_strings.dart';
 
+/// Die Hauptübersichtsseite (Dashboard) der Anwendung.
 class MainPage extends StatelessWidget {
+  /// Erstellt eine neue [MainPage].
   const MainPage({super.key});
 
   @override

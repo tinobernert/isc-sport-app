@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_strings.dart';
 
+/// Seite zur Konfiguration der Systemeinstellungen.
 class SettingsPage extends StatelessWidget {
+  /// Erstellt eine neue [SettingsPage].
   const SettingsPage({super.key});
 
   @override
