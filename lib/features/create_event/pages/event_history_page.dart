@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../../core/models/sport_event_model.dart';
 import '../../../core/constants/app_strings.dart';
+import '../../../core/theme/app_colors.dart';
 
+/// Seite zur Anzeige der Bestenliste und Details eines archivierten Events.
 class EventHistoryPage extends StatelessWidget {
+  /// Das anzuzeigende [SportEventModel].
   final SportEventModel event;
 
+  /// Erstellt eine neue [EventHistoryPage].
   const EventHistoryPage({super.key, required this.event});
 
   @override
@@ -48,7 +52,7 @@ class EventHistoryPage extends StatelessWidget {
                       Text(
                         'Datum: ${event.date.day}.${event.date.month}.${event.date.year}',
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[600],
+                          color: AppColors.textMuted,
                         ),
                       ),
                     ],
@@ -82,13 +86,13 @@ class EventHistoryPage extends StatelessWidget {
             Color? rankColor;
             IconData? rankIcon;
             if (result.rank == 1) {
-              rankColor = const Color(0xFFFFD700); // Gold
+              rankColor = AppColors.gold;
               rankIcon = Icons.military_tech;
             } else if (result.rank == 2) {
-              rankColor = const Color(0xFFC0C0C0); // Silver
+              rankColor = AppColors.silver;
               rankIcon = Icons.military_tech;
             } else if (result.rank == 3) {
-              rankColor = const Color(0xFFCD7F32); // Bronze
+              rankColor = AppColors.bronze;
               rankIcon = Icons.military_tech;
             }
 
@@ -120,12 +124,12 @@ class EventHistoryPage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         result.className,
-                        style: TextStyle(fontSize: 12, color: Colors.grey[800]),
+                        style: TextStyle(fontSize: 12, color: Colors.grey.shade800),
                       ),
                     ),
                   ],
@@ -134,7 +138,7 @@ class EventHistoryPage extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
                     'Disziplin: ${result.disciplineName} • Leistung: ${result.performance}',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                    style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
                   ),
                 ),
                 trailing: Container(

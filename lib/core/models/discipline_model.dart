@@ -1,25 +1,52 @@
 import 'package:flutter/material.dart';
 
+/// Repräsentiert eine Sportdisziplin mit Leistungseinheit, Gewichtung und Auswertungsrichtung.
 class DisciplineModel {
+  /// Eindeutige ID der Disziplin.
   final String id;
-  final String name;
-  final String category; // 'LAUF', 'SPRUNG', 'WURF'
-  final IconData icon;
+
+  /// Name der Disziplin (z. B. "100m Sprint").
+  String name;
+
+  /// Kategorie der Disziplin ('LAUF', 'SPRUNG', 'WURF').
+  String category;
+
+  /// Icon der Disziplin.
+  IconData icon;
+
+  /// Gibt an, ob die Disziplin im Event aktiviert ist.
   bool isEnabled;
 
+  /// Maßeinheit der Leistung (z. B. "m", "s", "cm").
+  String einheit;
+
+  /// Gewichtung der Disziplin für die Punkteberechnung.
+  double gewichtung;
+
+  /// Gibt an, ob ein höherer Wert besser ist (`true` = z.B. Weitsprung, `false` = z.B. Sprint).
+  bool higherIsBetter;
+
+  /// Erstellt eine neue [DisciplineModel]-Instanz.
   DisciplineModel({
     required this.id,
     required this.name,
     required this.category,
     required this.icon,
     this.isEnabled = true,
+    this.einheit = 'm',
+    this.gewichtung = 1.0,
+    this.higherIsBetter = true,
   });
 
+  /// Erstellt eine Kopie mit optionalen Änderungen.
   DisciplineModel copyWith({
     String? name,
     String? category,
     IconData? icon,
     bool? isEnabled,
+    String? einheit,
+    double? gewichtung,
+    bool? higherIsBetter,
   }) {
     return DisciplineModel(
       id: id,
@@ -27,18 +54,25 @@ class DisciplineModel {
       category: category ?? this.category,
       icon: icon ?? this.icon,
       isEnabled: isEnabled ?? this.isEnabled,
+      einheit: einheit ?? this.einheit,
+      gewichtung: gewichtung ?? this.gewichtung,
+      higherIsBetter: higherIsBetter ?? this.higherIsBetter,
     );
   }
 
+  /// Konvertiert die Disziplin in ein JSON-Map.
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
         'category': category,
         'isEnabled': isEnabled,
+        'einheit': einheit,
+        'gewichtung': gewichtung,
+        'higherIsBetter': higherIsBetter,
       };
 
+  /// Erstellt eine [DisciplineModel]-Instanz aus einem JSON-Map.
   factory DisciplineModel.fromJson(Map<String, dynamic> json) {
-    // Map category to icon
     final cat = json['category'] as String? ?? 'LAUF';
     IconData iconData = Icons.directions_run;
     if (cat == 'SPRUNG') iconData = Icons.height;
@@ -50,9 +84,13 @@ class DisciplineModel {
       category: cat,
       icon: iconData,
       isEnabled: json['isEnabled'] as bool? ?? true,
+      einheit: json['einheit'] as String? ?? (cat == 'LAUF' ? 's' : 'm'),
+      gewichtung: (json['gewichtung'] as num?)?.toDouble() ?? 1.0,
+      higherIsBetter: json['higherIsBetter'] as bool? ?? (cat != 'LAUF'),
     );
   }
 
+  /// Gibt eine Standardliste von Disziplinen zurück.
   static List<DisciplineModel> defaultDisciplines() => [
         DisciplineModel(
           id: 'd1',
@@ -60,6 +98,9 @@ class DisciplineModel {
           category: 'LAUF',
           icon: Icons.directions_run,
           isEnabled: true,
+          einheit: 's',
+          gewichtung: 1.0,
+          higherIsBetter: false,
         ),
         DisciplineModel(
           id: 'd2',
@@ -67,6 +108,9 @@ class DisciplineModel {
           category: 'SPRUNG',
           icon: Icons.height,
           isEnabled: true,
+          einheit: 'm',
+          gewichtung: 1.0,
+          higherIsBetter: true,
         ),
         DisciplineModel(
           id: 'd3',
@@ -74,6 +118,9 @@ class DisciplineModel {
           category: 'WURF',
           icon: Icons.fitness_center,
           isEnabled: true,
+          einheit: 'm',
+          gewichtung: 1.5,
+          higherIsBetter: true,
         ),
         DisciplineModel(
           id: 'd4',
@@ -81,6 +128,9 @@ class DisciplineModel {
           category: 'LAUF',
           icon: Icons.timer,
           isEnabled: true,
+          einheit: 'min',
+          gewichtung: 1.0,
+          higherIsBetter: false,
         ),
         DisciplineModel(
           id: 'd5',
@@ -88,6 +138,9 @@ class DisciplineModel {
           category: 'SPRUNG',
           icon: Icons.airline_seat_legroom_extra,
           isEnabled: true,
+          einheit: 'cm',
+          gewichtung: 1.0,
+          higherIsBetter: true,
         ),
         DisciplineModel(
           id: 'd6',
@@ -95,6 +148,9 @@ class DisciplineModel {
           category: 'WURF',
           icon: Icons.sports_kabaddi,
           isEnabled: true,
+          einheit: 'm',
+          gewichtung: 1.0,
+          higherIsBetter: true,
         ),
         DisciplineModel(
           id: 'd7',
@@ -102,6 +158,9 @@ class DisciplineModel {
           category: 'LAUF',
           icon: Icons.speed,
           isEnabled: false,
+          einheit: 's',
+          gewichtung: 2.0,
+          higherIsBetter: false,
         ),
         DisciplineModel(
           id: 'd8',
@@ -109,6 +168,9 @@ class DisciplineModel {
           category: 'WURF',
           icon: Icons.sports_baseball,
           isEnabled: true,
+          einheit: 'm',
+          gewichtung: 1.0,
+          higherIsBetter: true,
         ),
       ];
 }

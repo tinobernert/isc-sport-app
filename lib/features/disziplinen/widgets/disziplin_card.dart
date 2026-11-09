@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../models/disziplin.dart';
+import '../../../core/models/discipline_model.dart';
 
 /// Card-Widget zur Anzeige einer einzelnen Disziplin in der Übersicht.
 class DisziplinCard extends StatelessWidget {
   /// Die anzuzeigende Disziplin.
-  final Disziplin disziplin;
+  final DisciplineModel discipline;
 
   /// Callback beim Antippen der Karte (z. B. zum Bearbeiten).
   final VoidCallback onTap;
@@ -14,12 +14,14 @@ class DisziplinCard extends StatelessWidget {
   /// Erstellt eine neue [DisziplinCard].
   const DisziplinCard({
     super.key,
-    required this.disziplin,
+    required this.discipline,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final richtungText = discipline.higherIsBetter ? 'Höher ist besser' : 'Niedriger ist besser';
+
     return Card(
       color: AppColors.primaryLight,
       margin: EdgeInsets.zero,
@@ -39,7 +41,7 @@ class DisziplinCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  disziplin.name,
+                  discipline.name,
                   textAlign: TextAlign.left,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -48,7 +50,7 @@ class DisziplinCard extends StatelessWidget {
                       ),
                 ),
                 Text(
-                  '${disziplin.einheit}, ${disziplin.richtung.name}, ${disziplin.gewichtung}',
+                  '${discipline.einheit} • $richtungText • Gew: ${discipline.gewichtung}',
                   textAlign: TextAlign.left,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

@@ -2,10 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../core/models/sport_event_model.dart';
 import '../../../core/services/sport_event_store.dart';
+import '../../../core/theme/app_colors.dart';
 
+/// Seite zur Konfiguration und Verwaltung eines bestehenden Sportevents.
 class ShowEventPage extends StatefulWidget {
+  /// Das zu bearbeitende [SportEventModel].
   final SportEventModel event;
 
+  /// Erstellt eine neue [ShowEventPage].
   const ShowEventPage({super.key, required this.event});
 
   @override
@@ -235,31 +239,30 @@ class _ShowEventPageState extends State<ShowEventPage> {
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
               filled: true,
-              fillColor: Colors.grey[50],
+              fillColor: Colors.grey.shade50,
             ),
           ),
           const SizedBox(height: 16),
 
-          // Grid für Disziplinen (kompakter, kleinere Boxen)
+          // Grid für Disziplinen
           LayoutBuilder(
             builder: (context, constraints) {
-              final crossAxisCount = constraints.maxWidth > 900 ? 3 : (constraints.maxWidth > 600 ? 2 : 1);
               return GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: filteredDisciplines.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  childAspectRatio: 3.3,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 320,
+                  mainAxisExtent: 80,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
                 ),
                 itemBuilder: (context, index) {
                   final discipline = filteredDisciplines[index];
-                  Color badgeColor = Colors.orange;
-                  if (discipline.category == 'LAUF') badgeColor = Colors.blue;
-                  if (discipline.category == 'SPRUNG') badgeColor = Colors.green;
-                  if (discipline.category == 'WURF') badgeColor = Colors.deepOrange;
+                  Color badgeColor = AppColors.primary;
+                  if (discipline.category == 'LAUF') badgeColor = AppColors.laufCategory;
+                  if (discipline.category == 'SPRUNG') badgeColor = AppColors.sprungCategory;
+                  if (discipline.category == 'WURF') badgeColor = AppColors.wurfCategory;
 
                   return Card(
                     elevation: 1,
@@ -271,7 +274,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: badgeColor.withOpacity(0.1),
+                              color: badgeColor.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(discipline.icon, color: badgeColor, size: 20),
@@ -285,7 +288,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                                   decoration: BoxDecoration(
-                                    color: badgeColor.withOpacity(0.15),
+                                    color: badgeColor.withValues(alpha: 0.15),
                                     borderRadius: BorderRadius.circular(3),
                                   ),
                                   child: Text(
@@ -314,7 +317,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
                             scale: 0.85,
                             child: Switch(
                               value: discipline.isEnabled,
-                              activeColor: colorScheme.primary,
+                              activeThumbColor: colorScheme.primary,
                               onChanged: (val) {
                                 setState(() {
                                   discipline.isEnabled = val;

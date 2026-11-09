@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/disziplin.dart';
+import '../../../core/models/discipline_model.dart';
 
 /// Controller zur Verwaltung der Formularlogik und Validierung beim Anlegen oder Bearbeiten einer Disziplin.
 class DisziplinFormController {
@@ -16,16 +16,16 @@ class DisziplinFormController {
   /// Die aktuell ausgewählte Einheit.
   String? einheit;
 
-  /// Die aktuell ausgewählte Wertungsrichtung.
-  Richtung? richtung;
+  /// Gibt an, ob ein höherer Wert besser ist (`true` = höher ist besser, `false` = niedriger ist besser).
+  bool higherIsBetter = true;
 
-  /// Erstellt einen [DisziplinFormController] und befüllt optional die Felder, falls eine bestehende [disziplin] übergeben wird.
-  DisziplinFormController({Disziplin? disziplin}) {
-    if (disziplin != null) {
-      nameController.text = disziplin.name;
-      gewichtungController.text = disziplin.gewichtung.toString();
-      einheit = disziplin.einheit;
-      richtung = disziplin.richtung;
+  /// Erstellt einen [DisziplinFormController] und befüllt optional die Felder, falls eine bestehende [discipline] übergeben wird.
+  DisziplinFormController({DisciplineModel? discipline}) {
+    if (discipline != null) {
+      nameController.text = discipline.name;
+      gewichtungController.text = discipline.gewichtung.toString();
+      einheit = discipline.einheit;
+      higherIsBetter = discipline.higherIsBetter;
     }
   }
 
@@ -53,12 +53,6 @@ class DisziplinFormController {
     return null;
   }
 
-  /// Validiert die Richtungsauswahl.
-  String? pruefeRichtung(Richtung? wert) {
-    if (wert == null) return 'Bitte eine Richtung auswählen.';
-    return null;
-  }
-
   /// Validiert die Gewichtungseingabe (muss eine Zahl > 0 sein).
   String? pruefeGewichtung(String? wert) {
     final zahl = double.tryParse((wert ?? '').trim().replaceAll(',', '.'));
@@ -68,17 +62,20 @@ class DisziplinFormController {
     return null;
   }
 
-  /// Validiert das Formular und erstellt eine neue [Disziplin] oder gibt `null` zurück bei Fehlern.
-  Disziplin? erstelleDisziplin() {
+  /// Validiert das Formular und erstellt ein neues [DisciplineModel] oder gibt `null` zurück bei Fehlern.
+  DisciplineModel? erstelleDisziplin({required String id, required String category, required IconData icon}) {
     if (!formKey.currentState!.validate()) return null;
 
-    return Disziplin(
+    return DisciplineModel(
+      id: id,
       name: nameController.text.trim(),
-      einheit: einheit!,
-      richtung: richtung!,
+      category: category,
+      icon: icon,
+      einheit: einheit ?? 'm',
       gewichtung: double.parse(
         gewichtungController.text.trim().replaceAll(',', '.'),
       ),
+      higherIsBetter: higherIsBetter,
     );
   }
 

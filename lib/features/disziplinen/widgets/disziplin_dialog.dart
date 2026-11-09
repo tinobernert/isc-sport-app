@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_dropdown.dart';
 import '../../../core/widgets/app_text_field.dart';
+import '../../../core/models/discipline_model.dart';
 import '../controllers/disziplin_form_controller.dart';
-import '../models/disziplin.dart';
 
 /// Dialog-Widget zum Anlegen oder Bearbeiten einer Disziplin.
 class DisziplinDialog extends StatefulWidget {
-  /// Die zu bearbeitende [Disziplin] oder `null`, falls eine neue Disziplin angelegt wird.
-  final Disziplin? disziplin;
+  /// Die zu bearbeitende [DisciplineModel] oder `null`, falls eine neue Disziplin angelegt wird.
+  final DisciplineModel? discipline;
 
   /// Erstellt einen neuen [DisziplinDialog].
-  const DisziplinDialog({super.key, this.disziplin});
+  const DisziplinDialog({super.key, this.discipline});
 
   @override
   State<DisziplinDialog> createState() => _DisziplinDialogState();
@@ -24,7 +24,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
   @override
   void initState() {
     super.initState();
-    _formular = DisziplinFormController(disziplin: widget.disziplin);
+    _formular = DisziplinFormController(discipline: widget.discipline);
   }
 
   @override
@@ -34,9 +34,13 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
   }
 
   void _speichern() {
-    final disziplin = _formular.erstelleDisziplin();
-    if (disziplin != null) {
-      Navigator.pop(context, disziplin);
+    final discipline = _formular.erstelleDisziplin(
+      id: widget.discipline?.id ?? 'd_${DateTime.now().millisecondsSinceEpoch}',
+      category: widget.discipline?.category ?? 'LAUF',
+      icon: widget.discipline?.icon ?? Icons.sports,
+    );
+    if (discipline != null) {
+      Navigator.pop(context, discipline);
     }
   }
 
@@ -45,7 +49,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
     return AlertDialog(
       backgroundColor: Colors.white,
       title: Text(
-        widget.disziplin == null
+        widget.discipline == null
             ? 'Disziplin hinzufügen'
             : 'Disziplin bearbeiten',
       ),
@@ -74,26 +78,25 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                     );
                   }).toList(),
                   onChanged: (wert) {
-                    _formular.einheit = wert;
+                    setState(() {
+                      _formular.einheit = wert;
+                    });
                   },
                 ),
                 const SizedBox(height: 20),
-                AppDropdown<Richtung>(
-                  label: 'Richtung',
-                  value: _formular.richtung,
-                  validator: _formular.pruefeRichtung,
-                  items: const [
-                    DropdownMenuItem(
-                      value: Richtung.hoch,
-                      child: Text('Hoch gut'),
-                    ),
-                    DropdownMenuItem(
-                      value: Richtung.niedrig,
-                      child: Text('Niedrig gut'),
-                    ),
-                  ],
-                  onChanged: (wert) {
-                    _formular.richtung = wert;
+                SwitchListTile(
+                  title: const Text('Höher ist besser'),
+                  subtitle: Text(
+                    _formular.higherIsBetter
+                        ? 'Mehr Leistung = mehr Punkte (z. B. Weitsprung)'
+                        : 'Weniger Zeit/Wert = mehr Punkte (z. B. Sprint)',
+                  ),
+                  value: _formular.higherIsBetter,
+                  activeThumbColor: AppColors.primary,
+                  onChanged: (val) {
+                    setState(() {
+                      _formular.higherIsBetter = val;
+                    });
                   },
                 ),
                 const SizedBox(height: 20),
