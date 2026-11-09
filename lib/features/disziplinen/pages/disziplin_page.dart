@@ -134,10 +134,10 @@ class _DisziplinPageState extends State<DisziplinPage> {
               : GridView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 330,
+              maxCrossAxisExtent: 320,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
-              mainAxisExtent: 175,
+              childAspectRatio: 1.45, // Proportionales Verhältnis für kompakte Höhe
             ),
             itemCount: filteredDisciplines.length,
             itemBuilder: (context, index) {

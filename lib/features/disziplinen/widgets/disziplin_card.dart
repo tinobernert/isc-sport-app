@@ -38,11 +38,11 @@ class DisziplinCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header: Icon + Name
+              // Header Row: Icon & Title
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -76,9 +76,23 @@ class DisziplinCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              // Badge: Richtung
+              // Statischer Beschreibungstext als Platzhalter
+              Text(
+                'Klassische Durchführung dieser Disziplin gemäß den regulären Vorgaben.',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 11,
+                  height: 1.3,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              // Badge (Höher/Niedriger ist besser)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                   color: richtungBg,
                   borderRadius: BorderRadius.circular(6),
@@ -92,7 +106,7 @@ class DisziplinCard extends StatelessWidget {
                       richtungText,
                       style: TextStyle(
                         fontSize: 10,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: richtungColor,
                       ),
                     ),
@@ -102,11 +116,10 @@ class DisziplinCard extends StatelessWidget {
 
               const Spacer(),
 
-              // Trennlinie oben im unteren Bereich
-              const Divider(height: 1, color: Color(0xFFEEEEEE)),
-              const SizedBox(height: 6),
+              // Trennlinie
+              const Divider(height: 16, color: Color(0xFFF0F0F0)),
 
-              // Zeile 1: Einheit (Label links, Wert rechts)
+              // Zeile: Einheit
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -130,7 +143,7 @@ class DisziplinCard extends StatelessWidget {
 
               const SizedBox(height: 4),
 
-              // Zeile 2: Gewichtung (Label links, Wert rechts)
+              // Zeile: Gewichtung
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
