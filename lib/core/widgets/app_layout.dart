@@ -4,7 +4,9 @@ import '../navigation/app_routes.dart';
 import 'main_app_bar.dart';
 import 'side_bar.dart';
 
+/// Das grundlegende Layout-Scaffold für Hauptseiten mit AppBar und SideBar.
 class AppLayout extends StatelessWidget {
+  /// Erstellt ein neues [AppLayout].
   const AppLayout({
     super.key,
     this.currentRoute,
@@ -12,8 +14,13 @@ class AppLayout extends StatelessWidget {
     required this.child,
   });
 
+  /// Die aktuell aktive Route.
   final AppRoute? currentRoute;
+
+  /// Optionaler spezifischer Titel. Falls `null`, wird der Titel der [currentRoute] verwendet.
   final String? title;
+
+  /// Das Inhaltselement der Seite.
   final Widget child;
 
   @override

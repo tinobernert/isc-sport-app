@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../features/classes/pages/classes_page.dart';
-import '../../features/create_disziplin/pages/disziplin_page.dart';
+import '../../features/create_event/pages/create_event_page.dart';
+import '../../features/disziplinen/pages/disziplin_page.dart';
 import '../../features/enter_points/pages/enter_points_page.dart';
 import '../../features/main_screen/pages/main_page.dart';
 import '../../features/ranking/pages/ranking_page.dart';
@@ -35,6 +36,11 @@ enum AppRoute {
     icon: Icon(Icons.groups_outlined),
     selectedIcon: Icon(Icons.groups),
   ),
+  createEvent(
+    title: 'Veranstaltung erstellen',
+    icon: Icon(Icons.event_outlined),
+    selectedIcon: Icon(Icons.event),
+  ),
   settings(
     title: 'Einstellungen',
     icon: Icon(Icons.settings_outlined),
@@ -42,9 +48,16 @@ enum AppRoute {
     isFooter: true,
   );
 
+  /// Der in der Navigation/AppBar angezeigte Titel.
   final String title;
+
+  /// Das Icon im inaktiven Zustand.
   final Widget icon;
+
+  /// Das Icon im ausgewählten Zustand.
   final Widget? selectedIcon;
+
+  /// Gibt an, ob das Element unten im Footer des Drawers gerendert wird.
   final bool isFooter;
 
   const AppRoute({
@@ -67,12 +80,15 @@ enum AppRoute {
         return const DisziplinPage();
       case AppRoute.classes:
         return const ClassesPage();
+      case AppRoute.createEvent:
+        return const CreateEventPage();
       case AppRoute.settings:
         return const SettingsPage();
     }
   }
 }
 
+/// Hilfsklasse zur Steuerung der Bildschirmnavigation.
 class AppRoutes {
   /// Navigiert zum Ziel-Route Enum.
   static void navigateTo(
@@ -80,7 +96,10 @@ class AppRoutes {
     AppRoute targetRoute,
     AppRoute? currentRoute,
   ) {
-    Navigator.pop(context); // Sidebar schliessen.
+    // Drawer nur schließen, falls dieser aktuell geöffnet ist.
+    if (Scaffold.maybeOf(context)?.isDrawerOpen ?? false) {
+      Navigator.pop(context);
+    }
     if (targetRoute == currentRoute) return;
 
     Navigator.pushReplacement(

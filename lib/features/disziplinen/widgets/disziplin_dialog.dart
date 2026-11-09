@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_dropdown.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../controllers/disziplin_form_controller.dart';
-import '../models/disziplinen.dart';
+import '../models/disziplin.dart';
 
+/// Dialog-Widget zum Anlegen oder Bearbeiten einer Disziplin.
 class DisziplinDialog extends StatefulWidget {
-  // null bedeutet: neue Disziplin anlegen.
-  final Disziplinen? disziplin;
+  /// Die zu bearbeitende [Disziplin] oder `null`, falls eine neue Disziplin angelegt wird.
+  final Disziplin? disziplin;
 
+  /// Erstellt einen neuen [DisziplinDialog].
   const DisziplinDialog({super.key, this.disziplin});
 
   @override
@@ -110,14 +113,14 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
       actions: [
         TextButton(
           style: TextButton.styleFrom(
-            foregroundColor: const Color(0xFFFF8134),
+            foregroundColor: AppColors.primary,
           ),
           onPressed: () => Navigator.pop(context),
           child: const Text('Abbrechen'),
         ),
         FilledButton(
           style: FilledButton.styleFrom(
-            backgroundColor: const Color(0xFFFF8134),
+            backgroundColor: AppColors.primary,
           ),
           onPressed: _speichern,
           child: const Text('Speichern'),

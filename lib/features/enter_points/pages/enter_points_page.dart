@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/app_layout.dart';
 
+/// Seite zur Eingabe von erzielten Punkten und Leistungen.
 class EnterPointsPage extends StatelessWidget {
+  /// Erstellt eine neue [EnterPointsPage].
   const EnterPointsPage({super.key});
 
   @override

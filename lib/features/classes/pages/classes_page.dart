@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/app_layout.dart';
 
+/// Seite zur Verwaltung von Schulklassen und Teilnehmergruppen.
 class ClassesPage extends StatelessWidget {
+  /// Erstellt eine neue [ClassesPage].
   const ClassesPage({super.key});
 
   @override

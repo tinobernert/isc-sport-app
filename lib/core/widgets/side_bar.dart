@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../navigation/app_routes.dart';
 
+/// Die seitliche Navigations-Drawer-Komponente der Anwendung.
 class SideBar extends StatelessWidget {
+  /// Die aktuell aktive Route (falls vorhanden).
   final AppRoute? currentRoute;
+
+  /// Callback, der beim Auswählen einer neuen Route aufgerufen wird.
   final ValueChanged<AppRoute> onRouteSelected;
 
+  /// Erstellt eine neue [SideBar].
   const SideBar({
     super.key,
     required this.currentRoute,

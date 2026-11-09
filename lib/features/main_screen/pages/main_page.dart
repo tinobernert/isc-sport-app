@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/app_layout.dart';
 
+/// Die Hauptübersichtsseite (Dashboard) der Anwendung.
 class MainPage extends StatelessWidget {
+  /// Erstellt eine neue [MainPage].
   const MainPage({super.key});
 
   @override

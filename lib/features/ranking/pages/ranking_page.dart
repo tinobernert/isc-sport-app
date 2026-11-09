@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../core/navigation/app_routes.dart';
 import '../../../core/widgets/app_layout.dart';
 
+/// Seite zur Anzeige der Punktauswertung und Ranglisten.
 class RankingPage extends StatelessWidget {
+  /// Erstellt eine neue [RankingPage].
   const RankingPage({super.key});
 
   @override
@@ -13,7 +15,10 @@ class RankingPage extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(24),
         children: [
-          Text('Rangliste', style: Theme.of(context).textTheme.headlineMedium),
+          Text(
+            AppRoute.ranking.title,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           const SizedBox(height: 10),
         ],
       ),

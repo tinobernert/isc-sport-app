@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../models/disziplinen.dart';
+import '../../../core/theme/app_colors.dart';
+import '../models/disziplin.dart';
 
-// Vorlage für eine einzelne Disziplin. Hier kannst du das Design anpassen.
+/// Card-Widget zur Anzeige einer einzelnen Disziplin in der Übersicht.
 class DisziplinCard extends StatelessWidget {
-  final Disziplinen disziplin;
+  /// Die anzuzeigende Disziplin.
+  final Disziplin disziplin;
+
+  /// Callback beim Antippen der Karte (z. B. zum Bearbeiten).
   final VoidCallback onTap;
 
+  /// Erstellt eine neue [DisziplinCard].
   const DisziplinCard({
     super.key,
     required this.disziplin,
@@ -16,7 +21,7 @@ class DisziplinCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color.fromARGB(255, 255, 234, 221),
+      color: AppColors.primaryLight,
       margin: EdgeInsets.zero,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -38,19 +43,22 @@ class DisziplinCard extends StatelessWidget {
                   textAlign: TextAlign.left,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headlineSmall
-                      ?.copyWith(fontWeight: FontWeight.w600),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
                 Text(
                   '${disziplin.einheit}, ${disziplin.richtung.name}, ${disziplin.gewichtung}',
                   textAlign: TextAlign.left,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.w400, color: const Color.fromARGB(255, 147, 148, 148),),
-                )
-              ],)
-
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textMuted,
+                      ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

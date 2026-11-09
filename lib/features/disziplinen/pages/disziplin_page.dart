@@ -5,13 +5,16 @@ import '../../../core/widgets/add_button.dart';
 import '../../../core/widgets/app_layout.dart';
 import '../../../core/widgets/page_heading.dart';
 import '../data/test_disziplinen.dart';
-import '../models/disziplinen.dart';
+import '../models/disziplin.dart';
 import '../widgets/disziplin_card.dart';
 import '../widgets/disziplin_dialog.dart';
 
+/// Die Hauptseite zur Anzeige und Verwaltung aller Sportdisziplinen.
 class DisziplinPage extends StatefulWidget {
-  final List<Disziplinen> disziplinen;
+  /// Optionale initiale Liste von Disziplinen (standardmäßig [testDisziplinen]).
+  final List<Disziplin> disziplinen;
 
+  /// Erstellt eine neue [DisziplinPage].
   const DisziplinPage({super.key, this.disziplinen = testDisziplinen});
 
   @override
@@ -20,7 +23,7 @@ class DisziplinPage extends StatefulWidget {
 
 class _DisziplinPageState extends State<DisziplinPage> {
   // Eigene Kopie, damit die ursprüngliche Testliste unverändert bleibt.
-  late final List<Disziplinen> _disziplinen;
+  late final List<Disziplin> _disziplinen;
 
   @override
   void initState() {
@@ -29,7 +32,7 @@ class _DisziplinPageState extends State<DisziplinPage> {
   }
 
   Future<void> _bearbeiten(int index) async {
-    final ergebnis = await showDialog<Disziplinen>(
+    final ergebnis = await showDialog<Disziplin>(
       context: context,
       barrierColor: Colors.black38,
       builder: (context) => DisziplinDialog(disziplin: _disziplinen[index]),
@@ -44,7 +47,7 @@ class _DisziplinPageState extends State<DisziplinPage> {
   }
 
   Future<void> _hinzufuegen() async {
-    final neueDisziplin = await showDialog<Disziplinen>(
+    final neueDisziplin = await showDialog<Disziplin>(
       context: context,
       barrierColor: Colors.black38,
       builder: (context) => const DisziplinDialog(),
@@ -79,8 +82,8 @@ class _DisziplinPageState extends State<DisziplinPage> {
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(24),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 220,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
                 mainAxisExtent: 100,
