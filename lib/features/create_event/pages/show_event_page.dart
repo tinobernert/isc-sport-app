@@ -22,6 +22,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
   late TextEditingController _dateController;
   late String _selectedBlock;
   late DateTime _selectedDate;
+  late bool _isCurrent;
 
   // Auto-save state
   String _saveStatus = 'Automatisch gespeichert ✓';
@@ -35,6 +36,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
     _descriptionController = TextEditingController(text: widget.event.description);
     _selectedBlock = widget.event.block;
     _selectedDate = widget.event.date;
+    _isCurrent = widget.event.isCurrent;
     _dateController = TextEditingController(
       text: '${_selectedDate.day}.${_selectedDate.month}.${_selectedDate.year}',
     );
@@ -63,6 +65,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
       widget.event.description = _descriptionController.text;
       widget.event.block = _selectedBlock;
       widget.event.date = _selectedDate;
+      widget.event.isCurrent = _isCurrent;
       SportEventStore().updateEvent(widget.event);
 
       if (mounted) {
@@ -226,17 +229,66 @@ class _ShowEventPageState extends State<ShowEventPage> {
                         }).toList(),
                       ),
                       const SizedBox(height: 16),
-                      TextField(
-                        controller: _dateController,
-                        readOnly: true,
-                        onTap: _pickDate,
-                        decoration: const InputDecoration(
-                          labelText: 'Datum des Events',
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.calendar_today),
-                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _dateController,
+                              readOnly: true,
+                              onTap: _pickDate,
+                              decoration: const InputDecoration(
+                                labelText: 'Datum des Events',
+                                border: OutlineInputBorder(),
+                                filled: true,
+                                fillColor: Colors.white,
+                                prefixIcon: Icon(Icons.calendar_today),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Container(
+                            height: 56,
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: Colors.grey.shade400),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                  'Aktiv',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Transform.scale(
+                                  scale: 0.85,
+                                  child: Switch(
+                                    value: _isCurrent,
+                                    activeThumbColor: colorScheme.primary,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        _isCurrent = val;
+                                        if (val) {
+                                          SportEventStore().setCurrentEvent(widget.event.id);
+                                        } else {
+                                          widget.event.isCurrent = false;
+                                          SportEventStore().updateEvent(widget.event);
+                                        }
+                                      });
+                                      _onFieldChanged();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   );

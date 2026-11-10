@@ -80,7 +80,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
           ),
           const SizedBox(height: 8),
 
-          // Orange accent line above the active event card matching the design reference
+          // Orange accent line above the active event card
           Container(
             height: 4,
             decoration: BoxDecoration(
@@ -91,71 +91,139 @@ class _CreateEventPageState extends State<CreateEventPage> {
           const SizedBox(height: 12),
 
           // Aktuelles Event Card
-          Card(
-            color: AppColors.background,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-              side: BorderSide(color: AppColors.grey300, width: 1.2),
-            ),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ShowEventPage(event: current),
-                  ),
-                );
-              },
-              borderRadius: BorderRadius.circular(16),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            current.name.isEmpty ? 'Unbenanntes Event' : current.name,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
+          if (current != null)
+            Card(
+              color: AppColors.background,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: AppColors.grey300, width: 1.2),
+              ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ShowEventPage(event: current),
+                    ),
+                  );
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Title & Badges Row (Aktiv, Block & Datum)
+                            Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 10,
+                              runSpacing: 6,
+                              children: [
+                                Text(
+                                  current.name.isEmpty ? 'Unbenanntes Event' : current.name,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                // Aktiv Badge
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.warningLight,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                                  ),
+                                  child: const Text(
+                                    'Aktiv',
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                                // Block Badge
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFE0F2FE),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    'Block ${current.block}',
+                                    style: const TextStyle(
+                                      color: Color(0xFF0369A1),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                                // Datum Badge
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFF1F5F9),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    '${current.date.day}.${current.date.month}.${current.date.year}',
+                                    style: TextStyle(
+                                      color: AppColors.grey800,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            current.description.isEmpty
-                                ? 'Block ${current.block} • Keine Beschreibung hinterlegt'
-                                : 'Block ${current.block} • ${current.description}',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.textMuted,
-                              height: 1.3,
+                            const SizedBox(height: 8),
+                            // Description text
+                            Text(
+                              current.description.trim().isEmpty
+                                  ? 'Keine Beschreibung hinterlegt'
+                                  : current.description,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.textMuted,
+                                height: 1.3,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      tooltip: 'Event konfigurieren',
-                      icon: const Icon(Icons.settings_outlined, color: AppColors.textMuted),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ShowEventPage(event: current),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                      IconButton(
+                        tooltip: 'Event konfigurieren',
+                        icon: const Icon(Icons.settings_outlined, color: AppColors.textMuted),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ShowEventPage(event: current),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Text(
+                'Kein aktives Event ausgewählt.',
+                style: TextStyle(color: AppColors.textMuted, fontSize: 14),
+              ),
             ),
-          ),
+
           const SizedBox(height: 32),
 
           // 2. ARCHIVIERTE EVENTS Header
@@ -170,13 +238,14 @@ class _CreateEventPageState extends State<CreateEventPage> {
           ),
           const SizedBox(height: 12),
 
-          // Archivierte Events Liste
+          // Archivierte Events Liste (volle Breite mit Badges)
           archived.isEmpty
               ? const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text('Keine archivierten Events vorhanden.'),
                 )
               : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: archived.map((archivedEvent) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
@@ -192,49 +261,77 @@ class _CreateEventPageState extends State<CreateEventPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EventHistoryPage(event: archivedEvent),
+                                builder: (context) => ShowEventPage(event: archivedEvent),
                               ),
                             );
                           },
                           borderRadius: BorderRadius.circular(16),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                            child: Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.grey100,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: const Icon(Icons.history, color: AppColors.grey600, size: 20),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Wrap(
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    spacing: 10,
+                                    runSpacing: 6,
                                     children: [
                                       Text(
-                                        archivedEvent.name,
+                                        archivedEvent.name.isEmpty ? 'Unbenanntes Event' : archivedEvent.name,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15,
                                           color: Colors.black87,
                                         ),
                                       ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Block ${archivedEvent.block} • ${archivedEvent.date.day}.${archivedEvent.date.month}.${archivedEvent.date.year}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: AppColors.textMuted,
+                                      // Block Badge
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFF1F5F9),
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          'Block ${archivedEvent.block}',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.grey800,
+                                          ),
+                                        ),
+                                      ),
+                                      // Datum Badge
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFF1F5F9),
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          '${archivedEvent.date.day}.${archivedEvent.date.month}.${archivedEvent.date.year}',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.grey800,
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                const Icon(Icons.chevron_right, color: AppColors.grey500),
-                              ],
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    archivedEvent.description.trim().isEmpty
+                                        ? 'Keine Beschreibung hinterlegt'
+                                        : archivedEvent.description,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: AppColors.textMuted,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

@@ -35,16 +35,19 @@ class SportEventStore extends ChangeNotifier {
 
   List<SportEventModel> get events => List.unmodifiable(_events);
 
-  SportEventModel get currentEvent {
+  /// Gibt das aktuell aktive Event zurück oder `null`, falls kein Event als aktiv markiert ist.
+  SportEventModel? get currentEvent {
     try {
       return _events.firstWhere((e) => e.isCurrent);
     } catch (_) {
-      return _events.first;
+      return null;
     }
   }
 
+  /// Gibt alle nicht-aktiven (archivierten) Events zurück.
   List<SportEventModel> get archivedEvents => _events.where((e) => !e.isCurrent).toList();
 
+  /// Markiert das Event mit [id] als einziges aktives Event.
   void setCurrentEvent(String id) {
     for (var e in _events) {
       e.isCurrent = (e.id == id);
@@ -52,12 +55,13 @@ class SportEventStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Erstellt ein neues Event und setzt es als aktives Event.
   SportEventModel createNewEvent({
     required String name,
     required String description,
     required String block,
   }) {
-    // Demote current event if any
+    // Alle anderen Events deaktivieren
     for (var e in _events) {
       e.isCurrent = false;
     }
@@ -76,6 +80,7 @@ class SportEventStore extends ChangeNotifier {
     return newEvent;
   }
 
+  /// Aktualisiert ein bestehendes Event.
   void updateEvent(SportEventModel updatedEvent) {
     final index = _events.indexWhere((e) => e.id == updatedEvent.id);
     if (index != -1) {
