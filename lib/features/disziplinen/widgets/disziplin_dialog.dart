@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/models/discipline_model.dart';
@@ -49,8 +50,8 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
       backgroundColor: Colors.white,
       title: Text(
         widget.discipline == null
-            ? 'Disziplin hinzufügen'
-            : 'Disziplin bearbeiten',
+            ? AppStrings.addDisciplineTitle
+            : AppStrings.editDisciplineTitle,
       ),
       content: SizedBox(
         width: 520,
@@ -62,13 +63,13 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppTextField(
-                  label: 'Name',
+                  label: AppStrings.disciplineNameLabel,
                   controller: _formular.nameController,
                   validator: _formular.pruefeName,
                 ),
                 const SizedBox(height: 20),
                 AppTextField(
-                  label: 'Gewichtung',
+                  label: AppStrings.disciplineWeightLabel,
                   controller: _formular.gewichtungController,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -77,7 +78,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'Icon',
+                  AppStrings.iconLabel,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black87),
                 ),
                 const SizedBox(height: 8),
@@ -113,7 +114,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                         ),
                         const SizedBox(width: 16),
                         const Text(
-                          'Icon ändern',
+                          AppStrings.changeIconLabel,
                           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black87),
                         ),
                         const Spacer(),
@@ -124,7 +125,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'Einheit',
+                  AppStrings.unitLabel,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black87),
                 ),
                 const SizedBox(height: 8),
@@ -158,7 +159,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                   controlAffinity: ListTileControlAffinity.leading,
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    _formular.higherIsBetter ? 'Mehr ist besser' : 'Weniger ist besser',
+                    _formular.higherIsBetter ? AppStrings.moreIsBetter : AppStrings.lessIsBetter,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
@@ -187,14 +188,14 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
             foregroundColor: AppColors.primary,
           ),
           onPressed: () => Navigator.pop(context),
-          child: const Text('Abbrechen'),
+          child: const Text(AppStrings.cancelButton),
         ),
         FilledButton(
           style: FilledButton.styleFrom(
             backgroundColor: AppColors.primary,
           ),
           onPressed: _speichern,
-          child: const Text('Speichern'),
+          child: const Text(AppStrings.saveButton),
         ),
       ],
     );
