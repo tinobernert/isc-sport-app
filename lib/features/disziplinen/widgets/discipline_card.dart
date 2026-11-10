@@ -32,7 +32,7 @@ class DisciplineCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: AppColors.grey200),
+        side: BorderSide(color: AppColors.grey300, width: 1.2),
       ),
       child: InkWell(
         onTap: onTap,
@@ -67,7 +67,7 @@ class DisciplineCard extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: Colors.black87,
+                        color: AppColors.grey800,
                       ),
                     ),
                   ),
@@ -76,15 +76,16 @@ class DisciplineCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              // Statischer Beschreibungstext als Platzhalter
+              // Statischer Beschreibungstext als Platzhalter mit besserem Kontrast
               Text(
                 'Klassische Durchführung dieser Disziplin gemäß den regulären Vorgaben.',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 11,
+                  fontSize: 12,
                   height: 1.3,
-                  color: AppColors.grey600,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.grey800,
                 ),
               ),
 
@@ -92,7 +93,7 @@ class DisciplineCard extends StatelessWidget {
 
               // Badge (Höher/Niedriger ist besser)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: directionBg,
                   borderRadius: BorderRadius.circular(6),
@@ -100,13 +101,13 @@ class DisciplineCard extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(directionIcon, size: 11, color: directionColor),
+                    Icon(directionIcon, size: 12, color: directionColor),
                     const SizedBox(width: 4),
                     Text(
                       directionText,
                       style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
                         color: directionColor,
                       ),
                     ),
@@ -117,7 +118,7 @@ class DisciplineCard extends StatelessWidget {
               const Spacer(),
 
               // Trennlinie
-              const Divider(height: 16, color: Color(0xFFF0F0F0)),
+              const Divider(height: 16, color: Color(0xFFE0E0E0)),
 
               // Zeile: Einheit
               Row(
@@ -126,16 +127,17 @@ class DisciplineCard extends StatelessWidget {
                   Text(
                     'Einheit',
                     style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.grey500,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.grey800,
                     ),
                   ),
                   Text(
                     discipline.unit,
                     style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.grey800,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                 ],
@@ -150,16 +152,17 @@ class DisciplineCard extends StatelessWidget {
                   Text(
                     'Gewichtung',
                     style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.grey500,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.grey800,
                     ),
                   ),
                   Text(
                     '${discipline.weight} x',
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.grey800,
+                      color: Colors.black,
                     ),
                   ),
                 ],
