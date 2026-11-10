@@ -19,7 +19,9 @@ class ShowEventPage extends StatefulWidget {
 class _ShowEventPageState extends State<ShowEventPage> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
+  late TextEditingController _dateController;
   late String _selectedBlock;
+  late DateTime _selectedDate;
 
   // Auto-save state
   String _saveStatus = 'Automatisch gespeichert ✓';
@@ -32,6 +34,10 @@ class _ShowEventPageState extends State<ShowEventPage> {
     _nameController = TextEditingController(text: widget.event.name);
     _descriptionController = TextEditingController(text: widget.event.description);
     _selectedBlock = widget.event.block;
+    _selectedDate = widget.event.date;
+    _dateController = TextEditingController(
+      text: '${_selectedDate.day}.${_selectedDate.month}.${_selectedDate.year}',
+    );
 
     _nameController.addListener(_onFieldChanged);
     _descriptionController.addListener(_onFieldChanged);
@@ -42,6 +48,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
     _debounceTimer?.cancel();
     _nameController.dispose();
     _descriptionController.dispose();
+    _dateController.dispose();
     super.dispose();
   }
 
@@ -55,6 +62,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
       widget.event.name = _nameController.text;
       widget.event.description = _descriptionController.text;
       widget.event.block = _selectedBlock;
+      widget.event.date = _selectedDate;
       SportEventStore().updateEvent(widget.event);
 
       if (mounted) {
@@ -72,6 +80,22 @@ class _ShowEventPageState extends State<ShowEventPage> {
     _onFieldChanged();
   }
 
+  Future<void> _pickDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2035),
+    );
+    if (picked != null) {
+      setState(() {
+        _selectedDate = picked;
+        _dateController.text = '${picked.day}.${picked.month}.${picked.year}';
+      });
+      _onFieldChanged();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -82,21 +106,27 @@ class _ShowEventPageState extends State<ShowEventPage> {
           d.category.toLowerCase().contains(_searchQuery.toLowerCase());
     }).toList();
 
+    const warmBackgroundColor = Color(0xFFFCFBF9);
+    const warmCardColor = Color(0xFFF4EFEA);
+
     return Scaffold(
+      backgroundColor: warmBackgroundColor,
       appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
         title: Row(
           children: [
-            const Text('Event-Einstellungen'),
+            const Text('Event-Einstellungen', style: TextStyle(fontWeight: FontWeight.bold)),
             const Spacer(),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: Colors.white24,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 _saveStatus,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
               ),
             ),
           ],
@@ -107,8 +137,12 @@ class _ShowEventPageState extends State<ShowEventPage> {
         children: [
           // Kompakter Header (Side-by-Side on wide screens or Column on mobile)
           Card(
-            elevation: 2,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            color: warmCardColor,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(color: AppColors.grey300.withValues(alpha: 0.5)),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: LayoutBuilder(
@@ -120,7 +154,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
                     children: [
                       Text(
                         'Event Stammdaten',
-                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                       const SizedBox(height: 16),
                       TextField(
@@ -128,17 +162,23 @@ class _ShowEventPageState extends State<ShowEventPage> {
                         decoration: const InputDecoration(
                           labelText: 'Name des Events',
                           border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.event),
                         ),
                       ),
                       const SizedBox(height: 16),
                       TextField(
                         controller: _descriptionController,
-                        maxLines: 2,
+                        maxLines: 1,
+                        maxLength: 50,
                         decoration: const InputDecoration(
                           labelText: 'Beschreibung (optional)',
                           border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.description),
+                          counterText: '',
                         ),
                       ),
                     ],
@@ -149,7 +189,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
                     children: [
                       Text(
                         'Block-Auswahl',
-                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                        style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -165,10 +205,10 @@ class _ShowEventPageState extends State<ShowEventPage> {
                                   padding: const EdgeInsets.symmetric(vertical: 16),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    color: isSelected ? colorScheme.primary : Colors.grey.shade100,
+                                    color: isSelected ? colorScheme.primary : Colors.white,
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: isSelected ? colorScheme.primary : Colors.grey.shade300,
+                                      color: isSelected ? colorScheme.primary : AppColors.grey300,
                                     ),
                                   ),
                                   child: Text(
@@ -184,6 +224,19 @@ class _ShowEventPageState extends State<ShowEventPage> {
                             ),
                           );
                         }).toList(),
+                      ),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: _dateController,
+                        readOnly: true,
+                        onTap: _pickDate,
+                        decoration: const InputDecoration(
+                          labelText: 'Datum des Events',
+                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(Icons.calendar_today),
+                        ),
                       ),
                     ],
                   );
@@ -203,7 +256,7 @@ class _ShowEventPageState extends State<ShowEventPage> {
                       children: [
                         leftSection,
                         const SizedBox(height: 24),
-                        const Divider(),
+                        const Divider(color: AppColors.grey300),
                         const SizedBox(height: 16),
                         rightSection,
                       ],
@@ -221,11 +274,18 @@ class _ShowEventPageState extends State<ShowEventPage> {
             children: [
               Text(
                 'Disziplinen konfigurieren',
-                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: Colors.black87),
               ),
-              Text(
-                '${widget.event.disciplines.where((d) => d.isEnabled).length} aktiv',
-                style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.bold),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryLight,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '${widget.event.disciplines.where((d) => d.isEnabled).length} aktiv',
+                  style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),
@@ -237,9 +297,16 @@ class _ShowEventPageState extends State<ShowEventPage> {
             decoration: InputDecoration(
               hintText: 'Disziplinen durchsuchen...',
               prefixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: AppColors.grey300),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: AppColors.grey300),
+              ),
               filled: true,
-              fillColor: Colors.grey.shade50,
+              fillColor: Colors.white,
             ),
           ),
           const SizedBox(height: 16),
@@ -259,14 +326,14 @@ class _ShowEventPageState extends State<ShowEventPage> {
                 ),
                 itemBuilder: (context, index) {
                   final discipline = filteredDisciplines[index];
-                  Color badgeColor = AppColors.primary;
-                  if (discipline.category == 'LAUF') badgeColor = AppColors.laufCategory;
-                  if (discipline.category == 'SPRUNG') badgeColor = AppColors.sprungCategory;
-                  if (discipline.category == 'WURF') badgeColor = AppColors.wurfCategory;
 
                   return Card(
-                    elevation: 1,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    color: warmCardColor,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: AppColors.grey300.withValues(alpha: 0.5)),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       child: Row(
@@ -274,43 +341,22 @@ class _ShowEventPageState extends State<ShowEventPage> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: badgeColor.withValues(alpha: 0.1),
+                              color: AppColors.primaryLight,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Icon(discipline.icon, color: badgeColor, size: 20),
+                            child: Icon(discipline.icon, color: AppColors.primary, size: 20),
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 12),
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                  decoration: BoxDecoration(
-                                    color: badgeColor.withValues(alpha: 0.15),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                  child: Text(
-                                    discipline.category,
-                                    style: TextStyle(
-                                      fontSize: 9,
-                                      fontWeight: FontWeight.bold,
-                                      color: badgeColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  discipline.name,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13.5,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
+                            child: Text(
+                              discipline.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.black87,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           Transform.scale(

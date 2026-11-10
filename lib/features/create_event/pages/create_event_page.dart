@@ -37,8 +37,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
 
   void _createNewEvent(BuildContext context) {
     final newEvent = _store.createNewEvent(
-      name: 'Sporttag ${DateTime.now().year}',
-      description: 'Sommer-Bundesjugendspiele',
+      name: 'Sporttag 2026',
+      description: '',
       block: 'A',
     );
     Navigator.push(
@@ -118,7 +118,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            current.name,
+                            current.name.isEmpty ? 'Unbenanntes Event' : current.name,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -127,7 +127,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            'Block ${current.block} • ${current.description}',
+                            current.description.isEmpty
+                                ? 'Block ${current.block} • Keine Beschreibung hinterlegt'
+                                : 'Block ${current.block} • ${current.description}',
                             style: TextStyle(
                               fontSize: 13,
                               color: AppColors.textMuted,
