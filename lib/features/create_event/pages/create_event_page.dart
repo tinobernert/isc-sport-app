@@ -35,128 +35,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
     if (mounted) setState(() {});
   }
 
-  void _showCreateEventDialog(BuildContext context) {
-    final nameController = TextEditingController(text: 'Sporttag ${DateTime.now().year}');
-    final descController = TextEditingController();
-    String selectedBlock = 'A';
-
-    showDialog(
-      context: context,
-      builder: (dialogContext) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            final theme = Theme.of(context);
-            final colorScheme = theme.colorScheme;
-
-            return AlertDialog(
-              title: const Text('Neues Event anlegen'),
-              content: SizedBox(
-                width: 540,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Konfigurieren Sie das neue Sportfest für Ihre Berufsschulklassen.',
-                        style: TextStyle(color: AppColors.textMuted),
-                      ),
-                      const SizedBox(height: 20),
-                      TextField(
-                        controller: nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Name des Events',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.event_note),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        controller: descController,
-                        maxLines: 3,
-                        decoration: const InputDecoration(
-                          labelText: 'Beschreibung (optional)',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.description),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Block-Auswahl',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: ['A', 'B', 'C'].map((block) {
-                          final isSelected = selectedBlock == block;
-                          return Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4),
-                              child: InkWell(
-                                onTap: () {
-                                  setDialogState(() {
-                                    selectedBlock = block;
-                                  });
-                                },
-                                borderRadius: BorderRadius.circular(12),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 14),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: isSelected ? colorScheme.primary : AppColors.grey100,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: isSelected ? colorScheme.primary : AppColors.grey300,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'Block $block',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: isSelected ? Colors.white : AppColors.grey800,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(dialogContext),
-                  child: const Text('Abbrechen'),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: colorScheme.onPrimary,
-                  ),
-                  onPressed: () {
-                    final newEvent = _store.createNewEvent(
-                      name: nameController.text.trim().isEmpty ? 'Sporttag 2025' : nameController.text.trim(),
-                      description: descController.text.trim(),
-                      block: selectedBlock,
-                    );
-                    Navigator.pop(dialogContext);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ShowEventPage(event: newEvent),
-                      ),
-                    );
-                  },
-                  child: const Text('Event anlegen & Anzeigen'),
-                ),
-              ],
-            );
-          },
-        );
-      },
+  void _createNewEvent(BuildContext context) {
+    final newEvent = _store.createNewEvent(
+      name: 'Sporttag ${DateTime.now().year}',
+      description: 'Sommer-Bundesjugendspiele',
+      block: 'A',
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ShowEventPage(event: newEvent),
+      ),
     );
   }
 
@@ -168,7 +57,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showCreateEventDialog(context),
+        onPressed: () => _createNewEvent(context),
         icon: const Icon(Icons.add, size: 18),
         label: const Text('Neues Event', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: AppColors.primary,
