@@ -23,16 +23,16 @@ class DisziplinCard extends StatelessWidget {
     final isHigher = discipline.higherIsBetter;
     final richtungText = isHigher ? 'Höher ist besser' : 'Niedriger ist besser';
     final richtungIcon = isHigher ? Icons.arrow_upward : Icons.arrow_downward;
-    final richtungBg = isHigher ? Colors.green.shade50 : Colors.amber.shade50;
-    final richtungColor = isHigher ? Colors.green.shade700 : Colors.amber.shade800;
+    final richtungBg = isHigher ? AppColors.successLight : AppColors.warningLight;
+    final richtungColor = isHigher ? AppColors.successDark : AppColors.warningDark;
 
     return Card(
-      color: Colors.white,
+      color: AppColors.background,
       margin: EdgeInsets.zero,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Colors.grey.shade200),
+        side: BorderSide(color: AppColors.grey200),
       ),
       child: InkWell(
         onTap: onTap,
@@ -84,7 +84,7 @@ class DisziplinCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   height: 1.3,
-                  color: Colors.grey.shade600,
+                  color: AppColors.grey600,
                 ),
               ),
 
@@ -127,7 +127,7 @@ class DisziplinCard extends StatelessWidget {
                     'Einheit',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey.shade500,
+                      color: AppColors.grey500,
                     ),
                   ),
                   Text(
@@ -135,7 +135,7 @@ class DisziplinCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: Colors.grey.shade800,
+                      color: AppColors.grey800,
                     ),
                   ),
                 ],
@@ -151,7 +151,7 @@ class DisziplinCard extends StatelessWidget {
                     'Gewichtung',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey.shade500,
+                      color: AppColors.grey500,
                     ),
                   ),
                   Text(
@@ -159,7 +159,7 @@ class DisziplinCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: AppColors.grey800,
                     ),
                   ),
                 ],

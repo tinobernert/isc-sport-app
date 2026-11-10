@@ -47,7 +47,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       title: Text(
         widget.discipline == null
             ? AppStrings.addDisciplineTitle
@@ -79,7 +79,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                 const SizedBox(height: 20),
                 const Text(
                   AppStrings.iconLabel,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black87),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.grey800),
                 ),
                 const SizedBox(height: 8),
                 InkWell(
@@ -98,9 +98,9 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade50,
+                      color: AppColors.grey50,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade300),
+                      border: Border.all(color: AppColors.grey300),
                     ),
                     child: Row(
                       children: [
@@ -115,10 +115,10 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                         const SizedBox(width: 16),
                         const Text(
                           AppStrings.changeIconLabel,
-                          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black87),
+                          style: TextStyle(fontWeight: FontWeight.w500, color: AppColors.grey800),
                         ),
                         const Spacer(),
-                        const Icon(Icons.chevron_right, color: Colors.grey),
+                        const Icon(Icons.chevron_right, color: AppColors.grey500),
                       ],
                     ),
                   ),
@@ -126,7 +126,7 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                 const SizedBox(height: 20),
                 const Text(
                   AppStrings.unitLabel,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black87),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.grey800),
                 ),
                 const SizedBox(height: 8),
                 Wrap(
@@ -139,9 +139,9 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                       label: Text(einheit),
                       selected: isSelected,
                       selectedColor: AppColors.primaryLight,
-                      backgroundColor: Colors.grey.shade100,
+                      backgroundColor: AppColors.grey100,
                       labelStyle: TextStyle(
-                        color: isSelected ? AppColors.primary : Colors.black87,
+                        color: isSelected ? AppColors.primary : AppColors.grey800,
                         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                       ),
                       onSelected: (selected) {
@@ -169,8 +169,8 @@ class _DisziplinDialogState extends State<DisziplinDialog> {
                   ),
                   value: _formular.higherIsBetter,
                   activeThumbColor: AppColors.primary,
-                  inactiveThumbColor: Colors.grey.shade400,
-                  inactiveTrackColor: Colors.grey.shade200,
+                  inactiveThumbColor: AppColors.grey400,
+                  inactiveTrackColor: AppColors.grey200,
                   onChanged: (val) {
                     setState(() {
                       _formular.higherIsBetter = val;
