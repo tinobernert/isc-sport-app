@@ -8,7 +8,7 @@ class DisciplineModel {
   /// Name der Disziplin (z. B. "100m Sprint").
   String name;
 
-  /// Kategorie der Disziplin ('LAUF', 'SPRUNG', 'WURF').
+  /// Kategorie der Disziplin.
   String category;
 
   /// Icon der Disziplin.
@@ -26,16 +26,20 @@ class DisciplineModel {
   /// Gibt an, ob ein höherer Wert besser ist (`true` = z.B. Weitsprung, `false` = z.B. Sprint).
   bool higherIsBetter;
 
+  /// Beschreibung der Disziplin.
+  String description;
+
   /// Erstellt eine neue [DisciplineModel]-Instanz.
   DisciplineModel({
     required this.id,
     required this.name,
-    required this.category,
+    this.category = '',
     required this.icon,
     this.isEnabled = true,
     this.unit = 'm',
     this.weight = 1.0,
     this.higherIsBetter = true,
+    this.description = 'Klassische Durchführung dieser Disziplin gemäß den regulären Vorgaben.',
   });
 
   /// Erstellt eine Kopie mit optionalen Änderungen.
@@ -47,6 +51,7 @@ class DisciplineModel {
     String? unit,
     double? weight,
     bool? higherIsBetter,
+    String? description,
   }) {
     return DisciplineModel(
       id: id,
@@ -57,6 +62,7 @@ class DisciplineModel {
       unit: unit ?? this.unit,
       weight: weight ?? this.weight,
       higherIsBetter: higherIsBetter ?? this.higherIsBetter,
+      description: description ?? this.description,
     );
   }
 
@@ -69,108 +75,105 @@ class DisciplineModel {
         'unit': unit,
         'weight': weight,
         'higherIsBetter': higherIsBetter,
+        'description': description,
       };
 
   /// Erstellt eine [DisciplineModel]-Instanz aus einem JSON-Map.
   factory DisciplineModel.fromJson(Map<String, dynamic> json) {
-    final cat = json['category'] as String? ?? 'LAUF';
-    IconData iconData = Icons.directions_run;
-    if (cat == 'SPRUNG') iconData = Icons.height;
-    if (cat == 'WURF') iconData = Icons.fitness_center;
-
     return DisciplineModel(
       id: json['id'] as String,
       name: json['name'] as String,
-      category: cat,
-      icon: iconData,
+      category: json['category'] as String? ?? '',
+      icon: Icons.directions_run,
       isEnabled: json['isEnabled'] as bool? ?? true,
-      unit: json['unit'] as String? ?? json['einheit'] as String? ?? (cat == 'LAUF' ? 's' : 'm'),
-      weight: (json['weight'] as num?)?.toDouble() ?? (json['gewichtung'] as num?)?.toDouble() ?? 1.0,
-      higherIsBetter: json['higherIsBetter'] as bool? ?? (cat != 'LAUF'),
+      unit: json['unit'] as String? ?? 'm',
+      weight: (json['weight'] as num?)?.toDouble() ?? 1.0,
+      higherIsBetter: json['higherIsBetter'] as bool? ?? true,
+      description: json['description'] as String? ?? 'Klassische Durchführung dieser Disziplin gemäß den regulären Vorgaben.',
     );
   }
 
-  /// Gibt eine Standardliste von Disziplinen zurück.
+  /// Gibt eine Standardliste von Disziplinen mit spezifischen Beschreibungen zurück.
   static List<DisciplineModel> defaultDisciplines() => [
         DisciplineModel(
           id: 'd1',
           name: '100m Sprint',
-          category: 'LAUF',
           icon: Icons.directions_run,
           isEnabled: true,
           unit: 's',
           weight: 1.0,
           higherIsBetter: false,
+          description: 'Sprint über die klassische 100-Meter-Distanz mit fliegendem oder Tiefstart.',
         ),
         DisciplineModel(
           id: 'd2',
           name: 'Weitsprung',
-          category: 'SPRUNG',
           icon: Icons.height,
           isEnabled: true,
           unit: 'm',
           weight: 1.0,
           higherIsBetter: true,
+          description: 'Weitsprung in die Sandgrube mit Anlauf und Absprung vom Balken.',
         ),
         DisciplineModel(
           id: 'd3',
           name: 'Kugelstoßen',
-          category: 'WURF',
           icon: Icons.fitness_center,
           isEnabled: true,
           unit: 'm',
           weight: 1.5,
           higherIsBetter: true,
+          description: 'Kugelstoßen aus dem Abstoßring mit Stemmschritt oder Drehstoßtechnik.',
         ),
         DisciplineModel(
           id: 'd4',
           name: '3.000m Ausdauerlauf',
-          category: 'LAUF',
           icon: Icons.timer,
           isEnabled: true,
           unit: 'min',
           weight: 1.0,
           higherIsBetter: false,
+          description: 'Langstreckenlauf über 3.000 Meter zur Prüfung der aeroben Ausdauer.',
         ),
         DisciplineModel(
           id: 'd5',
           name: 'Hochsprung',
-          category: 'SPRUNG',
           icon: Icons.airline_seat_legroom_extra,
           isEnabled: true,
           unit: 'cm',
           weight: 1.0,
           higherIsBetter: true,
+          description: 'Hochsprung über die Latte im Fosbury-Flop oder Schersprung.',
         ),
         DisciplineModel(
           id: 'd6',
           name: 'Speerwurf',
-          category: 'WURF',
           icon: Icons.sports_kabaddi,
           isEnabled: true,
           unit: 'm',
           weight: 1.0,
           higherIsBetter: true,
+          description: 'Weitwurf mit dem Speer nach reglementiertem Anlauf.',
         ),
         DisciplineModel(
           id: 'd7',
           name: '400m Staffellauf',
-          category: 'LAUF',
           icon: Icons.speed,
           isEnabled: false,
           unit: 's',
           weight: 2.0,
           higherIsBetter: false,
+          description: 'Staffelsprint über eine Stadionrunde mit präziser Stabübergabe.',
         ),
         DisciplineModel(
           id: 'd8',
           name: 'Schlauchballwurf',
-          category: 'WURF',
           icon: Icons.sports_baseball,
           isEnabled: true,
           unit: 'm',
           weight: 1.0,
           higherIsBetter: true,
+          description: 'Kraftvoller Wurf eines genormten Schlauchballs für Schulwettbewerbe.',
         ),
       ];
 }

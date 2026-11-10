@@ -76,9 +76,9 @@ class DisciplineCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              // Statischer Beschreibungstext als Platzhalter mit besserem Kontrast
+              // Beschreibung aus dem Model
               Text(
-                'Klassische Durchführung dieser Disziplin gemäß den regulären Vorgaben.',
+                discipline.description,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
