@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/models/discipline_model.dart';
 
 /// Controller zur Verwaltung der Formularlogik und Validierung beim Anlegen oder Bearbeiten einer Disziplin.
-class DisziplinFormController {
+class DisciplineFormController {
   /// GlobalKey für die Formular-Validierung.
   final formKey = GlobalKey<FormState>();
 
@@ -11,10 +11,10 @@ class DisziplinFormController {
   final nameController = TextEditingController();
 
   /// Controller für das Gewichtungsfeld.
-  final gewichtungController = TextEditingController();
+  final weightController = TextEditingController();
 
   /// Die aktuell ausgewählte Einheit.
-  String? einheit;
+  String? unit;
 
   /// Gibt an, ob ein höherer Wert besser ist (`true` = höher ist besser, `false` = niedriger ist besser).
   bool higherIsBetter = true;
@@ -44,49 +44,49 @@ class DisziplinFormController {
     Icons.flag,
   ];
 
-  /// Erstellt einen [DisziplinFormController] und befüllt optional die Felder, falls eine bestehende [discipline] übergeben wird.
-  DisziplinFormController({DisciplineModel? discipline}) {
+  /// Erstellt einen [DisciplineFormController] und befüllt optional die Felder, falls eine bestehende [discipline] übergeben wird.
+  DisciplineFormController({DisciplineModel? discipline}) {
     if (discipline != null) {
       nameController.text = discipline.name;
-      gewichtungController.text = discipline.gewichtung.toString();
-      einheit = discipline.einheit;
+      weightController.text = discipline.weight.toString();
+      unit = discipline.unit;
       higherIsBetter = discipline.higherIsBetter;
       icon = discipline.icon;
     } else {
-      einheit = 'm';
-      gewichtungController.text = '1.0';
+      unit = 'm';
+      weightController.text = '1.0';
       icon = Icons.directions_run;
     }
   }
 
   /// Gibt die Liste der verfügbaren Standard-Einheiten zurück.
-  List<String> get verfuegbareEinheiten => ['m', 'cm', 's', 'min', 'kg', 'Punkte'];
+  List<String> get availableUnits => ['m', 'cm', 's', 'min', 'kg', 'Punkte'];
 
   /// Validiert die Namenseingabe.
-  String? pruefeName(String? wert) {
-    if (wert == null || wert.trim().isEmpty) {
+  String? validateName(String? value) {
+    if (value == null || value.trim().isEmpty) {
       return 'Bitte einen Namen eingeben.';
     }
     return null;
   }
 
   /// Validiert die Einheitsauswahl.
-  String? pruefeEinheit(String? wert) {
-    if (wert == null || wert.trim().isEmpty) return 'Bitte eine Einheit auswählen.';
+  String? validateUnit(String? value) {
+    if (value == null || value.trim().isEmpty) return 'Bitte eine Einheit auswählen.';
     return null;
   }
 
   /// Validiert die Gewichtungseingabe (muss eine Zahl > 0 sein).
-  String? pruefeGewichtung(String? wert) {
-    final zahl = double.tryParse((wert ?? '').trim().replaceAll(',', '.'));
-    if (zahl == null || !zahl.isFinite || zahl <= 0) {
+  String? validateWeight(String? value) {
+    final number = double.tryParse((value ?? '').trim().replaceAll(',', '.'));
+    if (number == null || !number.isFinite || number <= 0) {
       return 'Bitte eine Zahl größer als 0 eingeben.';
     }
     return null;
   }
 
   /// Validiert das Formular und erstellt ein neues [DisciplineModel] oder gibt `null` zurück bei Fehlern.
-  DisciplineModel? erstelleDisziplin({required String id, required String category}) {
+  DisciplineModel? createDiscipline({required String id, required String category}) {
     if (!formKey.currentState!.validate()) return null;
 
     return DisciplineModel(
@@ -94,9 +94,9 @@ class DisziplinFormController {
       name: nameController.text.trim(),
       category: category,
       icon: icon,
-      einheit: einheit ?? 'm',
-      gewichtung: double.parse(
-        gewichtungController.text.trim().replaceAll(',', '.'),
+      unit: unit ?? 'm',
+      weight: double.parse(
+        weightController.text.trim().replaceAll(',', '.'),
       ),
       higherIsBetter: higherIsBetter,
     );
@@ -105,6 +105,6 @@ class DisziplinFormController {
   /// Gibt die verwendeten Text-Controller frei.
   void dispose() {
     nameController.dispose();
-    gewichtungController.dispose();
+    weightController.dispose();
   }
 }

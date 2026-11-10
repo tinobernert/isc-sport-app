@@ -4,15 +4,15 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/models/discipline_model.dart';
 
 /// Card-Widget zur Anzeige einer einzelnen Disziplin in der Übersicht.
-class DisziplinCard extends StatelessWidget {
+class DisciplineCard extends StatelessWidget {
   /// Die anzuzeigende Disziplin.
   final DisciplineModel discipline;
 
   /// Callback beim Antippen der Karte (z. B. zum Bearbeiten).
   final VoidCallback onTap;
 
-  /// Erstellt eine neue [DisziplinCard].
-  const DisziplinCard({
+  /// Erstellt eine neue [DisciplineCard].
+  const DisciplineCard({
     super.key,
     required this.discipline,
     required this.onTap,
@@ -21,10 +21,10 @@ class DisziplinCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isHigher = discipline.higherIsBetter;
-    final richtungText = isHigher ? 'Höher ist besser' : 'Niedriger ist besser';
-    final richtungIcon = isHigher ? Icons.arrow_upward : Icons.arrow_downward;
-    final richtungBg = isHigher ? AppColors.successLight : AppColors.warningLight;
-    final richtungColor = isHigher ? AppColors.successDark : AppColors.warningDark;
+    final directionText = isHigher ? 'Höher ist besser' : 'Niedriger ist besser';
+    final directionIcon = isHigher ? Icons.arrow_upward : Icons.arrow_downward;
+    final directionBg = isHigher ? AppColors.successLight : AppColors.warningLight;
+    final directionColor = isHigher ? AppColors.successDark : AppColors.warningDark;
 
     return Card(
       color: AppColors.background,
@@ -94,20 +94,20 @@ class DisziplinCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: richtungBg,
+                  color: directionBg,
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(richtungIcon, size: 11, color: richtungColor),
+                    Icon(directionIcon, size: 11, color: directionColor),
                     const SizedBox(width: 4),
                     Text(
-                      richtungText,
+                      directionText,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
-                        color: richtungColor,
+                        color: directionColor,
                       ),
                     ),
                   ],
@@ -131,7 +131,7 @@ class DisziplinCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    discipline.einheit,
+                    discipline.unit,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -155,7 +155,7 @@ class DisziplinCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${discipline.gewichtung} x',
+                    '${discipline.weight} x',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,

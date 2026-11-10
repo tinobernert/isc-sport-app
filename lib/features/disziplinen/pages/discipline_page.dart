@@ -2,67 +2,67 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/models/discipline_model.dart';
-import '../widgets/disziplin_card.dart';
-import '../widgets/disziplin_dialog.dart';
+import '../widgets/discipline_card.dart';
+import '../widgets/discipline_dialog.dart';
 
 /// Die Hauptseite zur Anzeige und Verwaltung aller Sportdisziplinen.
-class DisziplinPage extends StatefulWidget {
+class DisciplinePage extends StatefulWidget {
   /// Optionale initiale Liste von Disziplinen (standardmäßig [DisciplineModel.defaultDisciplines()]).
-  final List<DisciplineModel> disziplinen;
+  final List<DisciplineModel> disciplines;
 
-  /// Erstellt eine neue [DisziplinPage].
-  const DisziplinPage({super.key, this.disziplinen = const []});
+  /// Erstellt eine neue [DisciplinePage].
+  const DisciplinePage({super.key, this.disciplines = const []});
 
   @override
-  State<DisziplinPage> createState() => _DisziplinPageState();
+  State<DisciplinePage> createState() => _DisciplinePageState();
 }
 
-class _DisziplinPageState extends State<DisziplinPage> {
-  late final List<DisciplineModel> _disziplinen;
+class _DisciplinePageState extends State<DisciplinePage> {
+  late final List<DisciplineModel> _disciplines;
   String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
-    _disziplinen = widget.disziplinen.isEmpty
+    _disciplines = widget.disciplines.isEmpty
         ? List.of(DisciplineModel.defaultDisciplines())
-        : List.of(widget.disziplinen);
+        : List.of(widget.disciplines);
   }
 
-  Future<void> _bearbeiten(int index) async {
+  Future<void> _edit(int index) async {
     final originalDiscipline = filteredDisciplines[index];
-    final originalIndex = _disziplinen.indexOf(originalDiscipline);
+    final originalIndex = _disciplines.indexOf(originalDiscipline);
 
-    final ergebnis = await showDialog<DisciplineModel>(
+    final result = await showDialog<DisciplineModel>(
       context: context,
       barrierColor: Colors.black38,
-      builder: (context) => DisziplinDialog(discipline: originalDiscipline),
+      builder: (context) => DisciplineDialog(discipline: originalDiscipline),
     );
 
-    if (ergebnis == null || !mounted) return;
+    if (result == null || !mounted) return;
 
     setState(() {
-      _disziplinen[originalIndex] = ergebnis;
+      _disciplines[originalIndex] = result;
     });
   }
 
-  Future<void> _hinzufuegen() async {
-    final neueDisziplin = await showDialog<DisciplineModel>(
+  Future<void> _add() async {
+    final newDiscipline = await showDialog<DisciplineModel>(
       context: context,
       barrierColor: Colors.black38,
-      builder: (context) => const DisziplinDialog(),
+      builder: (context) => const DisciplineDialog(),
     );
 
-    if (neueDisziplin == null || !mounted) return;
+    if (newDiscipline == null || !mounted) return;
 
     setState(() {
-      _disziplinen.add(neueDisziplin);
+      _disciplines.add(newDiscipline);
     });
   }
 
   List<DisciplineModel> get filteredDisciplines {
-    if (_searchQuery.trim().isEmpty) return _disziplinen;
-    return _disziplinen
+    if (_searchQuery.trim().isEmpty) return _disciplines;
+    return _disciplines
         .where((d) => d.name.toLowerCase().contains(_searchQuery.toLowerCase()))
         .toList();
   }
@@ -117,7 +117,7 @@ class _DisziplinPageState extends State<DisziplinPage> {
                   ),
                   elevation: 0,
                 ),
-                onPressed: _hinzufuegen,
+                onPressed: _add,
                 icon: const Icon(Icons.add, size: 18),
                 label: const Text('Hinzufügen', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
@@ -141,9 +141,9 @@ class _DisziplinPageState extends State<DisziplinPage> {
             ),
             itemCount: filteredDisciplines.length,
             itemBuilder: (context, index) {
-              return DisziplinCard(
+              return DisciplineCard(
                 discipline: filteredDisciplines[index],
-                onTap: () => _bearbeiten(index),
+                onTap: () => _edit(index),
               );
             },
           ),

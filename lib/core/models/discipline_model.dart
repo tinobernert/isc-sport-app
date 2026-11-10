@@ -18,10 +18,10 @@ class DisciplineModel {
   bool isEnabled;
 
   /// Maßeinheit der Leistung (z. B. "m", "s", "cm").
-  String einheit;
+  String unit;
 
   /// Gewichtung der Disziplin für die Punkteberechnung.
-  double gewichtung;
+  double weight;
 
   /// Gibt an, ob ein höherer Wert besser ist (`true` = z.B. Weitsprung, `false` = z.B. Sprint).
   bool higherIsBetter;
@@ -33,8 +33,8 @@ class DisciplineModel {
     required this.category,
     required this.icon,
     this.isEnabled = true,
-    this.einheit = 'm',
-    this.gewichtung = 1.0,
+    this.unit = 'm',
+    this.weight = 1.0,
     this.higherIsBetter = true,
   });
 
@@ -44,8 +44,8 @@ class DisciplineModel {
     String? category,
     IconData? icon,
     bool? isEnabled,
-    String? einheit,
-    double? gewichtung,
+    String? unit,
+    double? weight,
     bool? higherIsBetter,
   }) {
     return DisciplineModel(
@@ -54,8 +54,8 @@ class DisciplineModel {
       category: category ?? this.category,
       icon: icon ?? this.icon,
       isEnabled: isEnabled ?? this.isEnabled,
-      einheit: einheit ?? this.einheit,
-      gewichtung: gewichtung ?? this.gewichtung,
+      unit: unit ?? this.unit,
+      weight: weight ?? this.weight,
       higherIsBetter: higherIsBetter ?? this.higherIsBetter,
     );
   }
@@ -66,8 +66,8 @@ class DisciplineModel {
         'name': name,
         'category': category,
         'isEnabled': isEnabled,
-        'einheit': einheit,
-        'gewichtung': gewichtung,
+        'unit': unit,
+        'weight': weight,
         'higherIsBetter': higherIsBetter,
       };
 
@@ -84,8 +84,8 @@ class DisciplineModel {
       category: cat,
       icon: iconData,
       isEnabled: json['isEnabled'] as bool? ?? true,
-      einheit: json['einheit'] as String? ?? (cat == 'LAUF' ? 's' : 'm'),
-      gewichtung: (json['gewichtung'] as num?)?.toDouble() ?? 1.0,
+      unit: json['unit'] as String? ?? json['einheit'] as String? ?? (cat == 'LAUF' ? 's' : 'm'),
+      weight: (json['weight'] as num?)?.toDouble() ?? (json['gewichtung'] as num?)?.toDouble() ?? 1.0,
       higherIsBetter: json['higherIsBetter'] as bool? ?? (cat != 'LAUF'),
     );
   }
@@ -98,8 +98,8 @@ class DisciplineModel {
           category: 'LAUF',
           icon: Icons.directions_run,
           isEnabled: true,
-          einheit: 's',
-          gewichtung: 1.0,
+          unit: 's',
+          weight: 1.0,
           higherIsBetter: false,
         ),
         DisciplineModel(
@@ -108,8 +108,8 @@ class DisciplineModel {
           category: 'SPRUNG',
           icon: Icons.height,
           isEnabled: true,
-          einheit: 'm',
-          gewichtung: 1.0,
+          unit: 'm',
+          weight: 1.0,
           higherIsBetter: true,
         ),
         DisciplineModel(
@@ -118,8 +118,8 @@ class DisciplineModel {
           category: 'WURF',
           icon: Icons.fitness_center,
           isEnabled: true,
-          einheit: 'm',
-          gewichtung: 1.5,
+          unit: 'm',
+          weight: 1.5,
           higherIsBetter: true,
         ),
         DisciplineModel(
@@ -128,8 +128,8 @@ class DisciplineModel {
           category: 'LAUF',
           icon: Icons.timer,
           isEnabled: true,
-          einheit: 'min',
-          gewichtung: 1.0,
+          unit: 'min',
+          weight: 1.0,
           higherIsBetter: false,
         ),
         DisciplineModel(
@@ -138,8 +138,8 @@ class DisciplineModel {
           category: 'SPRUNG',
           icon: Icons.airline_seat_legroom_extra,
           isEnabled: true,
-          einheit: 'cm',
-          gewichtung: 1.0,
+          unit: 'cm',
+          weight: 1.0,
           higherIsBetter: true,
         ),
         DisciplineModel(
@@ -148,8 +148,8 @@ class DisciplineModel {
           category: 'WURF',
           icon: Icons.sports_kabaddi,
           isEnabled: true,
-          einheit: 'm',
-          gewichtung: 1.0,
+          unit: 'm',
+          weight: 1.0,
           higherIsBetter: true,
         ),
         DisciplineModel(
@@ -158,8 +158,8 @@ class DisciplineModel {
           category: 'LAUF',
           icon: Icons.speed,
           isEnabled: false,
-          einheit: 's',
-          gewichtung: 2.0,
+          unit: 's',
+          weight: 2.0,
           higherIsBetter: false,
         ),
         DisciplineModel(
@@ -168,8 +168,8 @@ class DisciplineModel {
           category: 'WURF',
           icon: Icons.sports_baseball,
           isEnabled: true,
-          einheit: 'm',
-          gewichtung: 1.0,
+          unit: 'm',
+          weight: 1.0,
           higherIsBetter: true,
         ),
       ];
