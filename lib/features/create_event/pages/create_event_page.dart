@@ -59,7 +59,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                     children: [
                       const Text(
                         'Konfigurieren Sie das neue Sportfest für Ihre Berufsschulklassen.',
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: AppColors.textMuted),
                       ),
                       const SizedBox(height: 20),
                       TextField(
@@ -103,17 +103,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
                                   padding: const EdgeInsets.symmetric(vertical: 14),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    color: isSelected ? colorScheme.primary : Colors.grey.shade100,
+                                    color: isSelected ? colorScheme.primary : AppColors.grey100,
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: isSelected ? colorScheme.primary : Colors.grey.shade300,
+                                      color: isSelected ? colorScheme.primary : AppColors.grey300,
                                     ),
                                   ),
                                   child: Text(
                                     'Block $block',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: isSelected ? Colors.white : Colors.black87,
+                                      color: isSelected ? Colors.white : AppColors.grey800,
                                     ),
                                   ),
                                 ),
@@ -162,8 +162,6 @@ class _CreateEventPageState extends State<CreateEventPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     final current = _store.currentEvent;
     final archived = _store.archivedEvents;
 
@@ -171,138 +169,117 @@ class _CreateEventPageState extends State<CreateEventPage> {
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showCreateEventDialog(context),
-        icon: const Icon(Icons.add),
-        label: const Text('Neues Event'),
-        backgroundColor: colorScheme.primary,
-        foregroundColor: colorScheme.onPrimary,
+        icon: const Icon(Icons.add, size: 18),
+        label: const Text('Neues Event', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppStrings.createEventHeading,
-                style: theme.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // 1. Aktuelles Event (Oberster Bereich)
+          // 1. AKTUELLES EVENT Header
           Text(
-            'Aktuelles Event',
-            style: theme.textTheme.titleMedium?.copyWith(
+            'AKTUELLES EVENT',
+            style: TextStyle(
+              fontSize: 12,
               fontWeight: FontWeight.bold,
-              color: colorScheme.primary,
+              color: AppColors.primary,
+              letterSpacing: 0.8,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
+
+          // Orange accent line above the active event card matching the design reference
+          Container(
+            height: 4,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // Aktuelles Event Card
           Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                gradient: LinearGradient(
-                  colors: [colorScheme.primary.withValues(alpha: 0.08), Colors.white],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          'Block ${current.block} • Aktiv',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+            color: AppColors.background,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(color: AppColors.grey300, width: 1.2),
+            ),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShowEventPage(event: current),
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            current.name,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
                           ),
-                        ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        tooltip: 'Event konfigurieren',
-                        icon: const Icon(Icons.settings),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ShowEventPage(event: current),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Block ${current.block} • ${current.description}',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.textMuted,
+                              height: 1.3,
                             ),
-                          );
-                        },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    current.name,
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    current.description,
-                    style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.textMuted),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Icon(Icons.sports, size: 18, color: colorScheme.primary),
-                      const SizedBox(width: 6),
-                      Text(
-                        '${current.disciplines.where((d) => d.isEnabled).length} Disziplinen aktiv',
-                        style: const TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                      const Spacer(),
-                      ElevatedButton.icon(
-                        icon: const Icon(Icons.tune, size: 16),
-                        label: const Text('Einstellungen & Disziplinen'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: colorScheme.primary,
-                          foregroundColor: colorScheme.onPrimary,
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ShowEventPage(event: current),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                    IconButton(
+                      tooltip: 'Event konfigurieren',
+                      icon: const Icon(Icons.settings_outlined, color: AppColors.textMuted),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ShowEventPage(event: current),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           const SizedBox(height: 32),
 
-          // 2. Archivierte Events (Unterer Bereich)
+          // 2. ARCHIVIERTE EVENTS Header
           Text(
-            'Archivierte Events',
-            style: theme.textTheme.titleMedium?.copyWith(
+            'ARCHIVIERTE EVENTS',
+            style: TextStyle(
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: AppColors.textMuted,
+              letterSpacing: 0.8,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
+
+          // Archivierte Events Liste
           archived.isEmpty
               ? const Padding(
                   padding: EdgeInsets.all(16.0),
@@ -310,36 +287,71 @@ class _CreateEventPageState extends State<CreateEventPage> {
                 )
               : Column(
                   children: archived.map((archivedEvent) {
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      elevation: 1,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.grey.shade200,
-                          child: const Icon(Icons.history, color: Colors.grey),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Card(
+                        color: AppColors.background,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: BorderSide(color: AppColors.grey300, width: 1.2),
                         ),
-                        title: Text(
-                          archivedEvent.name,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                          'Block ${archivedEvent.block} • ${archivedEvent.date.day}.${archivedEvent.date.month}.${archivedEvent.date.year}',
-                        ),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EventHistoryPage(event: archivedEvent),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EventHistoryPage(event: archivedEvent),
+                              ),
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(16),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.grey100,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Icon(Icons.history, color: AppColors.grey600, size: 20),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        archivedEvent.name,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        'Block ${archivedEvent.block} • ${archivedEvent.date.day}.${archivedEvent.date.month}.${archivedEvent.date.year}',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.textMuted,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Icon(Icons.chevron_right, color: AppColors.grey500),
+                              ],
                             ),
-                          );
-                        },
+                          ),
+                        ),
                       ),
                     );
                   }).toList(),
                 ),
+          const SizedBox(height: 80),
         ],
       ),
     );

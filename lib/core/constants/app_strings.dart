@@ -8,14 +8,14 @@ abstract class AppStrings {
   static const String mainPageTitle = 'Hauptseite';
   static const String rankingTitle = 'Punkteauswertung';
   static const String enterPointsTitle = 'Punkteeingabe';
-  static const String createEventTitle = 'Event erstellen';
+  static const String createEventTitle = 'Veranstaltung erstellen';
   static const String disziplinenTitle = 'Disziplinen';
   static const String classesTitle = 'Klassen';
   static const String settingsTitle = 'Einstellungen';
 
   // Überschriften & Beschriftungen
   static const String rankingHeading = 'Rangliste';
-  static const String createEventHeading = 'Veranstaltung erstellen';
+  static const String createEventHeading = 'Veranstaltung';
 
   // Dialoge & Aktionen
   static const String addEventTitle = 'Neues Event anlegen';

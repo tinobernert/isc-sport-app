@@ -10,7 +10,7 @@ class SportEventStore extends ChangeNotifier {
     SportEventModel(
       id: 'event_active_1',
       name: 'Sportfest Sommer 2025',
-      description: 'Sommer-Bundesjugendspiele für alle Berufsschulklassen im Block A und B.',
+      description: 'Sommer-Bundesjugendspiele',
       block: 'A',
       date: DateTime(2025, 6, 15),
       isCurrent: true,
