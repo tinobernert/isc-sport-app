@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_assets.dart';
+import '../constants/app_strings.dart';
 import '../navigation/app_routes.dart';
 
 /// Die seitliche Navigations-Drawer-Komponente der Anwendung.
@@ -35,17 +37,21 @@ class SideBar extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 28, 16, 16),
           child: Row(
             children: [
-              const CircleAvatar(radius: 26, child: Text('SP')),
+              const CircleAvatar(
+                radius: 26,
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage(AppAssets.logo),
+              ),
               const SizedBox(width: 14),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'SportPoint',
+                    AppStrings.appName,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'Sportverwaltung',
+                    AppStrings.appSubtitle,
                     style: TextStyle(color: scheme.onSurfaceVariant),
                   ),
                 ],

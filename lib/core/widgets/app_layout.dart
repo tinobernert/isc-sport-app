@@ -31,8 +31,17 @@ class AppLayout extends StatelessWidget {
       appBar: MainAppBar(title: displayTitle),
       drawer: SideBar(
         currentRoute: currentRoute,
-        onRouteSelected: (targetRoute) =>
-            AppRoutes.navigateTo(context, targetRoute, currentRoute),
+        onRouteSelected: (targetRoute) {
+          Navigator.pop(context); // Drawer schließen
+          if (targetRoute != currentRoute) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => targetRoute.buildPage(),
+              ),
+            );
+          }
+        },
       ),
       body: child,
     );

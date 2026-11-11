@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'core/constants/app_strings.dart';
 import 'core/theme/app_theme.dart';
-import 'features/main_screen/pages/main_page.dart';
+import 'core/widgets/app_shell.dart';
 
 /// Einstiegspunkt der SportPoint-Anwendung.
 void main() {
@@ -20,9 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: appTitle,
+      title: AppStrings.appName,
       theme: AppTheme.lightTheme,
-      home: const MainPage(),
+      home: const AppShell(),
     );
   }
 }
