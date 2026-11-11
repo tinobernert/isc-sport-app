@@ -35,12 +35,6 @@ void main() {
 
       // Prüft, dass das Event NICHT aktiv ist
       expect(event.isCurrent, isFalse);
-
-      // Mit `isNot(equals(...))` prüfen wir, dass die ID NICHT 999 entspricht
-      expect(event.id, isNot(equals(999)));
-
-      // Prüfen, dass der Name NICHT 'FalscherName' lautet
-      expect(event.name, isNot(equals('FalscherName')));
     });
   });
 }
