@@ -13,7 +13,7 @@ class EventRepository {
 
   List<SportEventModel> getArchivedEvents() => localDataSource.getArchivedEvents();
 
-  void setCurrentEvent(String id) => localDataSource.setCurrentEvent(id);
+  void setCurrentEvent(int id) => localDataSource.setCurrentEvent(id);
 
   SportEventModel createNewEvent({
     required String name,

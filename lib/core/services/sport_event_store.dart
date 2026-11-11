@@ -8,26 +8,34 @@ class SportEventStore extends ChangeNotifier {
 
   final List<SportEventModel> _events = [
     SportEventModel(
-      id: 'event_active_1',
-      name: 'Sportfest Sommer 2025',
-      description: 'Sommer-Bundesjugendspiele',
-      block: 'A',
+      id: 9,
+      name: 'Sportfest 2026',
+      description: 'Sportfest Block B',
+      block: 'B',
       date: DateTime(2025, 6, 15),
       isCurrent: true,
     ),
     SportEventModel(
-      id: 'event_archived_1',
-      name: 'Sporttag 2024 (Herbst)',
-      description: 'Herbst-Leichtathletik-Wettkampf der Berufsschule.',
-      block: 'B',
+      id: 8,
+      name: 'Sportfest 2026',
+      description: 'Sportfest Block A',
+      block: 'A',
+      date: DateTime(2025, 6, 15),
+      isCurrent: false,
+    ),
+    SportEventModel(
+      id: 7,
+      name: 'Sporttag 2025',
+      description: 'Sportfest Block C',
+      block: 'C',
       date: DateTime(2024, 10, 12),
       isCurrent: false,
     ),
     SportEventModel(
-      id: 'event_archived_2',
-      name: 'Sportfest 2024 (Frühling)',
-      description: 'Traditionelles Frühlings-Sportfest mit Disziplinen Lauf, Sprung, Wurf.',
-      block: 'C',
+      id: 6,
+      name: 'Sportfest 2025',
+      description: 'Sportfest Block B',
+      block: 'B',
       date: DateTime(2024, 5, 20),
       isCurrent: false,
     ),
@@ -48,7 +56,7 @@ class SportEventStore extends ChangeNotifier {
   List<SportEventModel> get archivedEvents => _events.where((e) => !e.isCurrent).toList();
 
   /// Markiert das Event mit [id] als einziges aktives Event.
-  void setCurrentEvent(String id) {
+  void setCurrentEvent(int id) {
     for (var e in _events) {
       e.id == id ? e.isCurrent = true : e.isCurrent = false;
     }
@@ -67,7 +75,7 @@ class SportEventStore extends ChangeNotifier {
     }
 
     final newEvent = SportEventModel(
-      id: 'event_${DateTime.now().millisecondsSinceEpoch}',
+      id: DateTime.now().millisecondsSinceEpoch,
       name: name,
       description: description,
       block: block,

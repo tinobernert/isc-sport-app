@@ -3,7 +3,7 @@ import '../../../../core/models/student_result_model.dart';
 
 /// Domain-Modell für eine Sportveranstaltung.
 class SportEventModel {
-  final String id;
+  final int id;
   String name;
   String description;
   String block; // 'A', 'B', 'C'
@@ -25,6 +25,7 @@ class SportEventModel {
         results = results ?? StudentResultModel.sampleResults();
 
   SportEventModel copyWith({
+    int? id,
     String? name,
     String? description,
     String? block,
@@ -34,7 +35,7 @@ class SportEventModel {
     List<StudentResultModel>? results,
   }) {
     return SportEventModel(
-      id: id,
+      id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
       block: block ?? this.block,

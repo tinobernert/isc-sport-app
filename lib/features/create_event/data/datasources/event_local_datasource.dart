@@ -5,7 +5,7 @@ abstract class EventLocalDataSource {
   List<SportEventModel> getEvents();
   SportEventModel? getCurrentEvent();
   List<SportEventModel> getArchivedEvents();
-  void setCurrentEvent(String id);
+  void setCurrentEvent(int id);
   SportEventModel createNewEvent({
     required String name,
     required String description,
@@ -18,7 +18,7 @@ abstract class EventLocalDataSource {
 class EventLocalDataSourceImpl implements EventLocalDataSource {
   final List<SportEventModel> _events = [
     SportEventModel(
-      id: 'event_active_1',
+      id: 9,
       name: 'Sportfest Sommer 2025',
       description: 'Sommer-Bundesjugendspiele',
       block: 'A',
@@ -26,7 +26,7 @@ class EventLocalDataSourceImpl implements EventLocalDataSource {
       isCurrent: true,
     ),
     SportEventModel(
-      id: 'event_archived_1',
+      id: 8,
       name: 'Sporttag 2024 (Herbst)',
       description: 'Herbst-Leichtathletik-Wettkampf der Berufsschule.',
       block: 'B',
@@ -34,7 +34,7 @@ class EventLocalDataSourceImpl implements EventLocalDataSource {
       isCurrent: false,
     ),
     SportEventModel(
-      id: 'event_archived_2',
+      id: 7,
       name: 'Sportfest 2024 (Frühling)',
       description: 'Traditionelles Frühlings-Sportfest mit Disziplinen Lauf, Sprung, Wurf.',
       block: 'C',
@@ -59,7 +59,7 @@ class EventLocalDataSourceImpl implements EventLocalDataSource {
   List<SportEventModel> getArchivedEvents() => _events.where((e) => !e.isCurrent).toList();
 
   @override
-  void setCurrentEvent(String id) {
+  void setCurrentEvent(int id) {
     for (var e in _events) {
       e.isCurrent = (e.id == id);
     }
@@ -76,7 +76,7 @@ class EventLocalDataSourceImpl implements EventLocalDataSource {
     }
 
     final newEvent = SportEventModel(
-      id: 'event_${DateTime.now().millisecondsSinceEpoch}',
+      id: DateTime.now().millisecondsSinceEpoch,
       name: name,
       description: description,
       block: block,
