@@ -36,6 +36,24 @@ void main() {
       expect(store.currentEvent?.isCurrent, isTrue);
     });
 
+    test('createNewEvent mit dynamischem Namen funktioniert', () {
+      final store = SportEventStore();
+      
+      // Arrange: Dynamische Zufallszahl im Test generieren
+      final randomNum = DateTime.now().microsecond;
+      final dynamicName = 'Sportfest $randomNum';
+
+      // Act
+      final newEvent = store.createNewEvent(
+        name: dynamicName,
+        description: 'Dynamische Beschreibung',
+        block: 'A',
+      );
+
+      // Assert
+      expect(store.currentEvent?.name, equals(dynamicName));
+    });
+
     test('setCurrentEvent aktiviert das gewählte Event und archiviert andere', () {
       // 1. Arrange
       final store = SportEventStore();
