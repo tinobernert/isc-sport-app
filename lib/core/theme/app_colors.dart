@@ -12,8 +12,11 @@ abstract class AppColors {
   /// Heller Akzent- bzw. Hintergrundfarbton für Cards und AppBars.
   static const Color primaryLight = Color(0xFFFFEADD);
 
-  /// Hintergrundfarbe der Screens.
-  static const Color background = Colors.white;
+  /// Hintergrundfarbe der Screens (Warmes Creme-Off-White).
+  static const Color background = Color(0xFFFCFBF9);
+
+  /// Card-Hintergrundfarbe (Reinweiß für Kontrast auf warmem Hintergrund).
+  static const Color cardBackground = Colors.white;
 
   /// Text- und Icon-Farbe auf primärem Hintergrund.
   static const Color onPrimary = Colors.white;
