@@ -42,11 +42,6 @@ enum AppRoute {
     icon: Icon(Icons.groups_outlined),
     selectedIcon: Icon(Icons.groups),
   ),
-  createEvent(
-    title: 'Veranstaltung erstellen',
-    icon: Icon(Icons.event_outlined),
-    selectedIcon: Icon(Icons.event),
-  ),
   settings(
     title: AppStrings.settingsTitle,
     icon: Icon(Icons.settings_outlined),
@@ -88,8 +83,6 @@ enum AppRoute {
         return const DisciplinePage();
       case AppRoute.classes:
         return const ClassesPage();
-      case AppRoute.createEvent:
-        return const CreateEventPage();
       case AppRoute.settings:
         return const SettingsPage();
     }

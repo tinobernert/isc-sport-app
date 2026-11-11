@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_strings.dart';
 import '../../../core/models/discipline_model.dart';
 import '../../../core/theme/app_colors.dart';
 
@@ -55,7 +56,7 @@ class _ClassSelectionPageState extends State<ClassSelectionPage> {
         foregroundColor: Colors.black87,
         elevation: 0,
         title: const Text(
-          'Klasse auswählen',
+          AppStrings.selectClassTitle,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         bottom: PreferredSize(
@@ -95,7 +96,7 @@ class _ClassSelectionPageState extends State<ClassSelectionPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Gewählte Disziplin',
+                          AppStrings.selectedDisciplineLabel,
                           style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.textMuted),
                         ),
                         const SizedBox(height: 2),
@@ -113,7 +114,7 @@ class _ClassSelectionPageState extends State<ClassSelectionPage> {
           const SizedBox(height: 24),
 
           Text(
-            'KLASSEN',
+            AppStrings.classesSectionHeader,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -131,7 +132,7 @@ class _ClassSelectionPageState extends State<ClassSelectionPage> {
               });
             },
             decoration: InputDecoration(
-              hintText: 'Klasse suchen...',
+              hintText: AppStrings.searchClassHint,
               prefixIcon: const Icon(Icons.search, color: AppColors.grey500),
               filled: true,
               fillColor: AppColors.cardBackground,
@@ -157,7 +158,7 @@ class _ClassSelectionPageState extends State<ClassSelectionPage> {
               ? const Center(
                   child: Padding(
                     padding: EdgeInsets.all(24.0),
-                    child: Text('Keine Klassen gefunden.', style: TextStyle(color: AppColors.textMuted)),
+                    child: Text(AppStrings.noClassesFound, style: TextStyle(color: AppColors.textMuted)),
                   ),
                 )
               : Column(

@@ -59,7 +59,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _createNewEvent(context),
         icon: const Icon(Icons.add, size: 18),
-        label: const Text('Neues Event', style: TextStyle(fontWeight: FontWeight.bold)),
+        label: const Text(AppStrings.newEventButton, style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -70,7 +70,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
         children: [
           // 1. AKTUELLES EVENT Header
           Text(
-            'AKTUELLES EVENT',
+            AppStrings.activeEventSectionHeader,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                               runSpacing: 6,
                               children: [
                                 Text(
-                                  current.name.isEmpty ? 'Unbenanntes Event' : current.name,
+                                  current.name.isEmpty ? AppStrings.unnamedEvent : current.name,
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -141,7 +141,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                                     border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
                                   ),
                                   child: const Text(
-                                    'Aktiv',
+                                    AppStrings.activeStatusBadge,
                                     style: TextStyle(
                                       color: AppColors.primary,
                                       fontWeight: FontWeight.bold,
@@ -187,7 +187,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                             // Description text
                             Text(
                               current.description.trim().isEmpty
-                                  ? 'Keine Beschreibung hinterlegt'
+                                  ? AppStrings.noDescriptionText
                                   : current.description,
                               style: TextStyle(
                                 fontSize: 13,
@@ -219,7 +219,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Text(
-                'Kein aktives Event ausgewählt.',
+                AppStrings.noActiveEventText,
                 style: TextStyle(color: AppColors.textMuted, fontSize: 14),
               ),
             ),
@@ -228,7 +228,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
 
           // 2. ARCHIVIERTE EVENTS Header
           Text(
-            'ARCHIVIERTE EVENTS',
+            AppStrings.archivedEventSectionHeader,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -242,7 +242,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
           archived.isEmpty
               ? const Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Text('Keine archivierten Events vorhanden.'),
+                  child: Text(AppStrings.noArchivedEventsText),
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -279,7 +279,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                                     runSpacing: 6,
                                     children: [
                                       Text(
-                                        archivedEvent.name.isEmpty ? 'Unbenanntes Event' : archivedEvent.name,
+                                        archivedEvent.name.isEmpty ? AppStrings.unnamedEvent : archivedEvent.name,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15,
@@ -323,7 +323,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                                   const SizedBox(height: 4),
                                   Text(
                                     archivedEvent.description.trim().isEmpty
-                                        ? 'Keine Beschreibung hinterlegt'
+                                        ? AppStrings.noDescriptionText
                                         : archivedEvent.description,
                                     style: TextStyle(
                                       fontSize: 12,

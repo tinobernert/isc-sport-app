@@ -77,7 +77,7 @@ class _MainPageState extends State<MainPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Disziplin auswählen',
+                  AppStrings.selectDisciplineTitle,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
@@ -108,7 +108,7 @@ class _MainPageState extends State<MainPage> {
                 });
               },
               decoration: InputDecoration(
-                hintText: 'Disziplin suchen...',
+                hintText: AppStrings.searchDisciplineHint,
                 prefixIcon: const Icon(Icons.search, color: AppColors.grey500),
                 filled: true,
                 fillColor: AppColors.background,
@@ -135,7 +135,7 @@ class _MainPageState extends State<MainPage> {
             child: _filteredDisciplines.isEmpty
                 ? const Center(
                     child: Text(
-                      'Keine aktiven Disziplinen gefunden.',
+                      AppStrings.noActiveDisciplinesFound,
                       style: TextStyle(color: AppColors.textMuted),
                     ),
                   )
