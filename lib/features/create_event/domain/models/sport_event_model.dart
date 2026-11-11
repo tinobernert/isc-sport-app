@@ -1,6 +1,7 @@
-import 'discipline_model.dart';
-import 'student_result_model.dart';
+import '../../../../core/models/discipline_model.dart';
+import '../../../../core/models/student_result_model.dart';
 
+/// Domain-Modell für eine Sportveranstaltung.
 class SportEventModel {
   final String id;
   String name;

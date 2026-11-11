@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../../core/models/sport_event_model.dart';
-import '../../../core/services/sport_event_store.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../../../core/services/sport_event_store.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../domain/models/sport_event_model.dart';
 
 /// Seite zur Konfiguration und Verwaltung eines bestehenden Sportevents.
 class ShowEventPage extends StatefulWidget {

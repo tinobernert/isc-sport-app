@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_strings.dart';
-import '../../../core/models/sport_event_model.dart';
-import '../../../core/services/sport_event_store.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/services/sport_event_store.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../domain/models/sport_event_model.dart';
 import 'event_history_page.dart';
 import 'show_event_page.dart';
 
-/// Seite zum Erstellen und Verwalten von Sportveranstaltungen.
+/// Seite zum Erstellen und Verwalten von Sportveranstaltungen (Presentation Layer).
 class CreateEventPage extends StatefulWidget {
   /// Erstellt eine neue [CreateEventPage].
   const CreateEventPage({super.key});
@@ -238,7 +238,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
           ),
           const SizedBox(height: 12),
 
-          // Archivierte Events Liste (volle Breite mit Badges)
+          // Archivierte Events Liste
           archived.isEmpty
               ? const Padding(
                   padding: EdgeInsets.all(16.0),

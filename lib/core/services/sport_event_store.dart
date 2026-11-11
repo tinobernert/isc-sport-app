@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../models/sport_event_model.dart';
+import '../../features/create_event/domain/models/sport_event_model.dart';
 
 class SportEventStore extends ChangeNotifier {
   static final SportEventStore _instance = SportEventStore._internal();
@@ -50,7 +50,7 @@ class SportEventStore extends ChangeNotifier {
   /// Markiert das Event mit [id] als einziges aktives Event.
   void setCurrentEvent(String id) {
     for (var e in _events) {
-      e.isCurrent = (e.id == id);
+      e.id == id ? e.isCurrent = true : e.isCurrent = false;
     }
     notifyListeners();
   }

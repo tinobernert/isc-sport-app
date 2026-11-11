@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/classes/pages/classes_page.dart';
-import '../../features/create_event/pages/create_event_page.dart';
+import '../../features/create_event/presentation/pages/create_event_page.dart';
 import '../../features/disziplinen/pages/discipline_page.dart';
 import '../../features/enter_points/pages/enter_points_page.dart';
 import '../../features/main_screen/pages/main_page.dart';
