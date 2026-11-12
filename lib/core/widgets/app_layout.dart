@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../navigation/app_routes.dart';
 import 'main_app_bar.dart';

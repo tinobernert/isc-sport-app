@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/services/sport_event_store.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../domain/models/sport_event_model.dart';
-import 'event_history_page.dart';
 import 'show_event_page.dart';
 
 /// Seite zum Erstellen und Verwalten von Sportveranstaltungen (Presentation Layer).
@@ -238,7 +236,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
           ),
           const SizedBox(height: 12),
 
-          // Archivierte Events Liste
+          // Archivierte Events Liste (volle Breite mit Badges)
           archived.isEmpty
               ? const Padding(
                   padding: EdgeInsets.all(16.0),

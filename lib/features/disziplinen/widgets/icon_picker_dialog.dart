@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import '../../../core/theme/app_colors.dart';
 
 /// Ein Dialog zur Auswahl eines Icons aus einer umfangreichen Liste von Sport- und allgemeinen Icons.
