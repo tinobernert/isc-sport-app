@@ -51,6 +51,7 @@ void main() {
       );
 
       // Assert
+      expect(store.currentEvent?.id, equals(newEvent.id));
       expect(store.currentEvent?.name, equals(dynamicName));
     });
 

@@ -9,3 +9,4 @@ analyzer:
     - windows/**
     - macos/**
     - linux/**
+    - scripts/sync_test_folders.dart

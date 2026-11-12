@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 /// Skript zum automatischen Spiegeln der Ordnerstruktur von lib/ nach test/unit/
