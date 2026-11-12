@@ -69,5 +69,28 @@ void main() {
       expect(store.currentEvent?.id, equals(targetEvent.id));
       expect(targetEvent.isCurrent, isTrue);
     });
+
+    test('updateEvent aktualisiert ein bestehendes Event', () {
+      // 1. Arrange
+      final store = SportEventStore();
+      final newEvent = store.createNewEvent(
+        name: 'Alter Name',
+        description: 'Alte Beschreibung',
+        block: 'A',
+      );
+
+      expect(store.currentEvent?.name, equals('Alter Name'));
+
+      // 2. Act: Event modifizieren und mit updateEvent speichern
+      final modifiedEvent = newEvent.copyWith(
+        name: 'Neuer Aktualisierter Name',
+        description: 'Neue Beschreibung',
+      );
+      store.updateEvent(modifiedEvent);
+
+      // 3. Assert: Prüfen, ob die Änderungen im Store übernommen wurden
+      expect(store.currentEvent?.name, equals('Neuer Aktualisierter Name'));
+      expect(store.currentEvent?.description, equals('Neue Beschreibung'));
+    });
   });
 }
