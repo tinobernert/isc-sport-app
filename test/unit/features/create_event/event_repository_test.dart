@@ -17,6 +17,18 @@ void main() {
       expect(current!.isCurrent, isTrue);
     });
 
+    test('getArchivedEvents liefert alle inaktiven Events', () {
+      final dataSource = EventLocalDataSourceImpl();
+      final repository = EventRepository(localDataSource: dataSource);
+
+      final archived = repository.getArchivedEvents();
+
+      expect(archived, isNotEmpty);
+      for (final event in archived) {
+        expect(event.isCurrent, isFalse);
+      }
+    });
+
     test('createNewEvent im Repository legt ein neues Event an', () {
       // 1. Arrange
       final dataSource = EventLocalDataSourceImpl();
@@ -35,6 +47,31 @@ void main() {
       expect(repository.getCurrentEvent()?.id, equals(newEvent.id));
       expect(repository.getCurrentEvent()?.name, equals('Repo Test Event'));
       expect(repository.getCurrentEvent()?.isCurrent, isTrue);
+    });
+
+    test('setCurrentEvent ändert das aktive Event im Repository', () {
+      final dataSource = EventLocalDataSourceImpl();
+      final repository = EventRepository(localDataSource: dataSource);
+
+      final archived = repository.getArchivedEvents();
+      final target = archived.first;
+
+      repository.setCurrentEvent(target.id);
+
+      expect(repository.getCurrentEvent()?.id, equals(target.id));
+      expect(target.isCurrent, isTrue);
+    });
+
+    test('updateEvent aktualisiert ein Event im Repository', () {
+      final dataSource = EventLocalDataSourceImpl();
+      final repository = EventRepository(localDataSource: dataSource);
+
+      final current = repository.getCurrentEvent()!;
+      final updated = current.copyWith(name: 'Updated Repo Event');
+
+      repository.updateEvent(updated);
+
+      expect(repository.getCurrentEvent()?.name, equals('Updated Repo Event'));
     });
   });
 }
