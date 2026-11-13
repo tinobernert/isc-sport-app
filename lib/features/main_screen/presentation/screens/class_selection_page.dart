@@ -1,8 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/constants/app_strings.dart';
-import '../../../core/models/discipline_model.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/models/discipline_model.dart';
+import '../../../../core/theme/app_colors.dart';
 
 /// Seite zur Auswahl der Klasse nach der Disziplinauswahl.
 class ClassSelectionPage extends StatefulWidget {

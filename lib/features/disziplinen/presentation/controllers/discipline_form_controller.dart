@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/models/discipline_model.dart';
+import '../../../../core/models/discipline_model.dart';
 
 /// Controller zur Verwaltung der Formularlogik und Validierung beim Anlegen oder Bearbeiten einer Disziplin.
 class DisciplineFormController {

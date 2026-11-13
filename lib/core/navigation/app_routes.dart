@@ -1,12 +1,12 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../features/classes/pages/classes_page.dart';
-import '../../features/create_event/presentation/pages/create_event_page.dart';
-import '../../features/disziplinen/pages/discipline_page.dart';
-import '../../features/enter_points/pages/enter_points_page.dart';
-import '../../features/main_screen/pages/main_page.dart';
-import '../../features/ranking/pages/ranking_page.dart';
-import '../../features/settings/pages/settings_page.dart';
+import '../../features/classes/presentation/screens/classes_page.dart';
+import '../../features/create_event/presentation/screens/create_event_page.dart';
+import '../../features/disziplinen/presentation/screens/discipline_page.dart';
+import '../../features/enter_points/presentation/screens/enter_points_page.dart';
+import '../../features/main_screen/presentation/screens/main_page.dart';
+import '../../features/ranking/presentation/screens/ranking_page.dart';
+import '../../features/settings/presentation/screens/settings_page.dart';
 import '../constants/app_strings.dart';
 
 /// AppRoute repräsentiert alle Haupt-Navigationsziele in der App

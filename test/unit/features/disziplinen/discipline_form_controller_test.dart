@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sport_point/core/models/discipline_model.dart';
-import 'package:sport_point/features/disziplinen/controllers/discipline_form_controller.dart';
+import 'package:sport_point/features/disziplinen/presentation/controllers/discipline_form_controller.dart';
 
 void main() {
   group('DisciplineFormController Tests', () {

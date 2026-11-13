@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/constants/app_strings.dart';
+import '../../../../core/constants/app_strings.dart';
 
 /// Seite zur Anzeige der Punktauswertung und Ranglisten.
 class RankingPage extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/constants/app_strings.dart';
-import '../../../core/models/discipline_model.dart';
-import '../../../core/services/sport_event_store.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/models/discipline_model.dart';
+import '../../../../core/services/sport_event_store.dart';
+import '../../../../core/theme/app_colors.dart';
 import 'class_selection_page.dart';
 
 /// Die Hauptseite (Dashboard) der Anwendung zur Disziplinauswahl.

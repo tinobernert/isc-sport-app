@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/models/discipline_model.dart';
+import '../../../../core/models/discipline_model.dart';
+import '../../../../core/theme/app_colors.dart';
 
 /// Card-Widget zur Anzeige einer einzelnen Disziplin in der Übersicht.
 class DisciplineCard extends StatelessWidget {
@@ -74,22 +74,7 @@ class DisciplineCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 8),
-
-              // Beschreibung aus dem Model
-              Text(
-                discipline.description,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 12,
-                  height: 1.3,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.grey800,
-                ),
-              ),
-
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
 
               // Badge (Höher/Niedriger ist besser)
               Container(

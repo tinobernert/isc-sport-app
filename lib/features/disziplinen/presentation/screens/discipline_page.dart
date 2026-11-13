@@ -1,11 +1,11 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/models/discipline_model.dart';
+import '../../../../core/models/discipline_model.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../widgets/discipline_card.dart';
 import '../widgets/discipline_dialog.dart';
 
-/// Die Hauptseite zur Anzeige und Verwaltung aller Sportdisziplinen.
+/// Die Hauptseite zur Anzeige und Verwaltung aller Sportdisziplinen (Presentation Layer).
 class DisciplinePage extends StatefulWidget {
   /// Optionale initiale Liste von Disziplinen (standardmäßig [DisciplineModel.defaultDisciplines()]).
   final List<DisciplineModel> disciplines;
@@ -137,7 +137,7 @@ class _DisciplinePageState extends State<DisciplinePage> {
               maxCrossAxisExtent: 320,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
-              childAspectRatio: 1.45, // Proportionales Verhältnis für kompakte Höhe
+              childAspectRatio: 1.45,
             ),
             itemCount: filteredDisciplines.length,
             itemBuilder: (context, index) {
