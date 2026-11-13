@@ -4,7 +4,21 @@ import 'package:sport_point/core/models/discipline_model.dart';
 import 'package:sport_point/features/disziplinen/presentation/controllers/discipline_form_controller.dart';
 
 void main() {
-  group('DisciplineFormController Tests', () {
+  group('DisciplineFormController 100% Coverage Tests', () {
+    test('Standardwerte bei Erstellung einer neuen Disziplin sind korrekt', () {
+      final controller = DisciplineFormController();
+
+      expect(controller.nameController.text, isEmpty);
+      expect(controller.weightController.text, equals('1.0'));
+      expect(controller.unit, equals('m'));
+      expect(controller.higherIsBetter, isTrue);
+      expect(controller.icon, equals(Icons.directions_run));
+      expect(controller.availableUnits, contains('m'));
+      expect(controller.availableIcons, isNotEmpty);
+
+      controller.dispose();
+    });
+
     test('Validierung des Namens schlägt bei leeren Eingaben fehl', () {
       final controller = DisciplineFormController();
 
@@ -16,7 +30,17 @@ void main() {
       controller.dispose();
     });
 
-    test('Validierung der Gewichtung prüft auf positive Zahlen', () {
+    test('Validierung der Einheit prüft auf Auswahl', () {
+      final controller = DisciplineFormController();
+
+      expect(controller.validateUnit(null), isNotNull);
+      expect(controller.validateUnit(''), isNotNull);
+      expect(controller.validateUnit('m'), isNull);
+
+      controller.dispose();
+    });
+
+    test('Validierung der Gewichtung prüft auf positive Zahlen und Komma-Konvertierung', () {
       final controller = DisciplineFormController();
 
       expect(controller.validateWeight(null), isNotNull);
@@ -29,8 +53,7 @@ void main() {
       controller.dispose();
     });
 
-    test('Initialisierung mit einer bestehenden Disziplin füllt die Controller', () {
-      // Wir erstellen eine Test-Disziplin
+    test('Initialisierung mit einer bestehenden Disziplin füllt alle Controller korrekt', () {
       final discipline = DisciplineModel(
         id: 'test_1',
         name: 'Hürdenlauf',
