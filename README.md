@@ -2,6 +2,13 @@
 
 **SportPoint** ist eine moderne Flutter-Anwendung zur einfachen Verwaltung und Auswertung von Sportfesten und Wettkämpfen an Berufsschulen.
 
+
+| Status |
+| :--- |
+|[![Flutter Tests: Live](https://github.com/tinobernert/isc-sport-app/actions/workflows/dart.yml/badge.svg?branch=live)](https://github.com/tinobernert/isc-sport-app/actions/workflows/dart.yml) |
+|[![Flutter Tests: Main](https://github.com/tinobernert/isc-sport-app/actions/workflows/dart.yml/badge.svg)](https://github.com/tinobernert/isc-sport-app/actions/workflows/dart.yml) |
+
+
 ---
 
 ## 📑 Inhaltsverzeichnis
